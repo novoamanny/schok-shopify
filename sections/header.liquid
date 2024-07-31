@@ -1,0 +1,137 @@
+{% include section.settings.header_style, full_width: section.settings.full_width, header_menu: section.settings.menu, transparent_header: section.settings.transparent_header %}
+{% if section.settings.logo_height_range %}
+	{% style %}
+	.header .logolink .logoimg {
+		max-height: {{ section.settings.logo_height_range | append: 'px' }};
+	}
+	{% endstyle %}
+{% endif %}
+{% render 'mobile-menu', menu: section.settings.menu, header_search: section.settings.header_search, mobile_secondary_menu: section.settings.mobile_secondary_menu, show_language_switcher: section.settings.show_language_switcher, show_currency_switcher: section.settings.show_currency_switcher %}
+<div class="click-capture"></div>
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Organization",
+    "name": {{ shop.name | json }},
+    {% if section.settings.logo %}
+      {% assign image_size = section.settings.logo.width | append: 'x' %}
+      "logo": {{ section.settings.logo | img_url: image_size | prepend: "https:" | json }},
+    {% endif %}
+    "sameAs": [
+      {{ settings.social_twitter_link | json }},
+      {{ settings.social_facebook_link | json }},
+      {{ settings.social_pinterest_link | json }},
+      {{ settings.social_instagram_link | json }},
+      {{ settings.social_tiktok_link | json }},
+      {{ settings.social_youtube_link | json }},
+      {{ settings.social_vimeo_link | json }}
+    ],
+    "url": {{ shop.url | append: page.url | json }}
+  }
+</script>
+{% schema %}
+{
+	"name": "Header",
+	"class": "header-section",
+	"settings": [
+		{
+			"type": "image_picker",
+			"id": "logo",
+			"label": "Logo image",
+			"info": "300 x 60 px .png recommended."
+		},
+		{
+			"type": "range",
+			"id": "logo_height_range",
+			"min": 20,
+			"max": 80,
+			"step": 1,
+			"unit": "px",
+			"label": "Custom logo height",
+			"default": 22
+		},
+		{
+			"type": "select",
+			"id": "header_style",
+			"label": "Desktop logo position",
+			"default": "header-style1",
+			"options": [
+				{ "value": "header-style2", "label": "Left" },
+				{ "value": "header-style1", "label": "Center" },
+				{ "value": "header-style4", "label": "Center with menu drawer" }
+			],
+			"info": "Position is always center for mobile."
+		},
+		{
+			"type": "checkbox",
+			"id": "full_width",
+			"label": "Make section full width",
+			"default": false,
+			"info": "Header will always fill the screen width on screens larger than 1440px"
+		},
+		{
+			"type": "link_list",
+			"id": "menu",
+			"default": "main-menu",
+			"label": "Menu"
+		},
+		{
+			"type": "header",
+			"content": "Transparent header"
+		},
+		{
+			"type": "checkbox",
+			"id": "transparent_header",
+			"label": "Enable on homepage",
+			"default": false
+		},
+		{
+			"type": "image_picker",
+			"id": "logo_light",
+			"label": "Logo image",
+			"info": "Displayed when transparent header is enabled. Uses the dimensions set on your main logo."
+		},
+		{
+			"type": "header",
+			"content": "Secondary area"
+		},
+		{
+			"type": "checkbox",
+			"id": "header_secondary_icons",
+			"label": "Use icons",
+			"default": false
+		},
+		{
+			"type": "checkbox",
+			"id": "header_search",
+			"label": "Enable search",
+			"default": true
+		},
+		{
+			"type": "header",
+			"content": "Mobile menu"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_language_switcher",
+			"label": "Enable language switcher",
+			"default": true,
+			"info": "To add a language, go to your [language settings](/admin/settings/languages)."
+		},
+		{
+			"type": "checkbox",
+			"id": "show_currency_switcher",
+			"label": "Enable currency switcher",
+			"default": true,
+			"info": "To add a country/region, go to your [payment settings](/admin/settings/payments)."
+		},
+		{
+			"type": "link_list",
+			"id": "mobile_secondary_menu",
+			"label": "Secondary menu",
+			"info": "Secondary menu is shown under the main menu."
+		}
+	]
+}
+{% endschema %}

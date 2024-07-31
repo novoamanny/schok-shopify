@@ -1,0 +1,201 @@
+{% case section.blocks.size %}
+  {% when 1 %}
+    {% assign grid_item_width = 'small-12' %}
+  {% when 2 %}
+    {% assign grid_item_width = 'small-12 medium-6' %}
+  {% when 3 %}
+    {% assign grid_item_width = 'small-12 medium-4' %}
+  {% when 4 %}
+    {% assign grid_item_width = 'small-12 medium-3' %}
+{% endcase %}
+<div class="section-margin {% if section.settings.disable_top_spacing %}section-no-top-margin{% endif %} {% if section.settings.disable_bottom_spacing %}section-no-bottom-margin{% endif %}">
+	<div class="row multicolumn align-center {% if section.settings.full_width %}full-width-row no-padding{% endif %}" id="multicolumn-{{ section.id }}">
+	  <div class="small-12 columns">
+	    <div class="row {{ section.settings.padding }}">
+	      {% for block in section.blocks limit: 4 %}
+	        <div class="{{ grid_item_width | escape }} columns {{ block.settings.text_alignment }} horizontal-textbox {{ block.settings.animation }}" id="block-{{ block.id }}" {{ block.shopify_attributes }}>
+	          <div class="horizontal-textbox-inner">
+							{% if block.settings.title != blank %}
+	            	<h4>{{ block.settings.title }}</h4>
+							{% endif %}
+							<div class="rte">
+								{{ block.settings.text }}
+							</div>
+	            {% if block.settings.button-text != blank %}
+	            <div class="vc_empty_space" style="height: 20px"></div>
+	            <a class="btn-text" href="{{ block.settings.button-link | escape }}" title="{{ block.settings.button-text | escape }}"><span>{{ block.settings.button-text }}</span>
+	              <div class="arrow">
+	                <div>
+	                  {% render 'svg-icons' with 'thb-button-arrow' %}
+	                  {% render 'svg-icons' with 'thb-button-arrow' %}
+	                </div>
+	              </div>
+	            </a>
+	            {% endif %}
+	          </div>
+						{% style %}
+							#block-{{ block.id }} .horizontal-textbox-inner {
+								{% if block.settings.bg_color %}
+								background: {{ block.settings.bg_color }};
+								{% endif %}
+							}
+							{% if block.settings.text_color != blank %}
+							#block-{{ block.id }} .horizontal-textbox-inner p,
+							#block-{{ block.id }} .horizontal-textbox-inner a {
+								color: {{ block.settings.text_color }};
+							}
+							#block-{{ block.id }} .horizontal-textbox-inner .btn-text .arrow svg path{
+								fill: {{ block.settings.text_color }};
+							}
+							{% endif %}
+							{% if block.settings.heading_color != blank %}
+							#block-{{ block.id }} .horizontal-textbox-inner h4 {
+								color: {{ block.settings.heading_color }};
+							}
+							{% endif %}
+						{% endstyle %}
+	        </div>
+	      {% endfor %}
+	    </div>
+	  </div>
+	</div>
+</div>
+{% schema %}
+  {
+    "name": "Multicolumn",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "full_width",
+        "label": "Make section full width",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "padding",
+        "label": "Column spacing",
+        "default": "",
+        "options": [
+          { "value": "", "label": "Large" },
+          { "value": "low-padding", "label": "Medium" },
+          { "value": "pixel-padding", "label": "Small" }
+        ]
+      },
+			{
+				"type": "header",
+				"content": "Spacing"
+			},
+			{
+				"type": "checkbox",
+				"id": "disable_top_spacing",
+				"default": false,
+				"label": "Remove top spacing"
+			},
+			{
+				"type": "checkbox",
+				"id": "disable_bottom_spacing",
+				"default": false,
+				"label": "Remove bottom spacing"
+			}
+    ],
+    "blocks": [
+      {
+        "type": "block",
+        "name": "Column",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Content",
+            "default": "<p>Focus on your upcoming sales. Add details on availability, style, or even provide a review.</p>"
+          },
+					{
+		         "type": "select",
+		         "id": "text_alignment",
+		         "label": "Content alignment",
+		         "options": [
+		           { "value": "text-center", "label": "Center" },
+		           { "value": "text-left", "label": "Left" },
+		           { "value": "text-right", "label": "Right" }
+		         ],
+		         "default": "text-center"
+		      },
+          {
+            "id": "button-text",
+            "type": "text",
+            "label": "Button label",
+            "default": "Shop Now",
+						"info": "Leave the label blank to hide the button."
+          },
+          {
+            "id": "button-link",
+            "type": "url",
+            "label": "Button link"
+          },
+					{
+		        "type": "select",
+		        "id": "animation",
+		        "label": "Loading animation",
+		        "default": "animation fade-in",
+		        "options": [
+		          { "value": "", "label": "None" },
+		          { "value": "animation right-to-left", "label": "Right to left" },
+		          { "value": "animation left-to-right", "label": "Left to right" },
+		          { "value": "animation right-to-left-long", "label": "Right to left long" },
+		          { "value": "animation left-to-right-long", "label": "Left to right long" },
+		          { "value": "animation bottom-to-top", "label": "Bottom to top" },
+		          { "value": "animation top-to-bottom", "label": "Top to bottom" },
+		          { "value": "animation scale", "label": "Scale" },
+		          { "value": "animation fade-in", "label": "Fade" }
+		        ]
+		      },
+					{
+		        "type": "header",
+		        "content": "Colors"
+		      },
+					{
+						"type": "color",
+						"id": "heading_color",
+						"label": "Heading",
+						"default": "#151515"
+					},
+					{
+						"type": "color",
+						"id": "text_color",
+						"label": "Text",
+						"default": "#444444"
+					},
+          {
+            "type": "color",
+            "id": "bg_color",
+            "label": "Background",
+            "default": "#f5f5f5"
+          }
+        ]
+      }
+    ],
+  	"max_blocks": 4,
+    "presets": [
+      {
+        "name": "Multicolumn",
+				"blocks": [
+					{
+						"type": "block"
+					},
+					{
+						"type": "block"
+					},
+					{
+						"type": "block"
+					}
+				]
+      }
+    ]
+  }
+{% endschema %}

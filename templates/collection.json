@@ -1,0 +1,25 @@
+{
+  "sections": {
+    "main-collection-banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_description": true,
+        "bg_image": "shopify:\/\/shop_images\/schok-motherboard-5.jpg"
+      }
+    },
+    "main-collection-product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "collection_product_count": 12,
+        "collection_layout": "style1",
+        "collection_grid_num": 4,
+        "enable_filtering": true,
+        "enable_sorting": true
+      }
+    }
+  },
+  "order": [
+    "main-collection-banner",
+    "main-collection-product-grid"
+  ]
+}

@@ -1,0 +1,109 @@
+<div class="support">
+  <section id="section-hero">
+      <img src="https://cdn.shopify.com/s/files/1/1527/1793/files/family-phone-and-picnic-photo-with-smile-hug-and-2022-12-14-23-46-22-utc-Extended.jpg?v=1695075489" alt="Schok CPU" class="hero">
+  </section>
+  
+  <section id="main-content" class='Support-main-content'>
+     
+    <div class='left'>
+      <h1>Schok Support</h1>
+      <p>Register Your Product.</p> <p> Fields marked with * are required.</p>
+    </div>
+
+    <div class='right'>
+      {% form 'contact' %}
+        {%- if form.posted_successfully? -%}
+          <div class="form-notification success">
+					Thank you for contacting us. We 'll be in touch shortly.
+				  </div>
+        {%- elsif form.errors -%}
+          <div class="form__message">
+            <div class="form-notification" style="background-color: red">
+					  Error
+				    </div>
+          </div>
+          <ul class="form-status-list caption-large" role="list">
+            <li>
+              <a href="#ContactForm-email" class="link white">
+                {{ form.errors.translated_fields.email | capitalize }}
+                {{ form.errors.messages.email }}
+              </a>
+            </li>
+          </ul>
+        {%- endif -%}
+        <div class="row">
+          <div class="small-12 medium-6 columns">
+            <div class="first-name">
+              <label for="first-name">First name*</label>
+              <input type="text" name="contact[first_name]" required="" class="full" id="first-name" />
+            </div>
+
+            <div class="serial-number">
+              <label for="serial-number">Serial Number*</label>
+              <input type="text" name="contact[serial_number]" required="" class="full" id="serial-numbe" />
+            </div>
+            
+          </div>
+  
+          <div class="small-12 medium-6 columns">
+            <div class="last-name">
+              <label for="last-name">Last name*</label>
+              <input type="text" name="contact[last_name]" required="" class="full" id="last-name" />
+            </div>
+
+            <div class="imei">
+              <label for="imei">IMEI Number*</label>
+              <input type="text" name="contact[imei_number]" required="" class="full" id="imei" />
+            </div>
+             
+          </div>
+
+          <div class="small-12 medium-12 columns">
+            <div class="date-purchased">
+              <label for="date-purchased">Date Purchased*</label>
+              <input type="text" name="contact[date_purchased]" required="" class="full" id="date-purchased" />
+            </div>
+          </div>
+        
+          <div class="small-12 medium-6 columns">
+            <div class="phone">
+              <label for="phone">Phone</label>
+              <input type="tel" name="contact[phone]" id="phone" class="full" />
+            </div>
+          
+            <div class="email">
+              <label for="email">Email*</label>
+              <input type="email" name="contact[email]" required="" class="full" id="email" />
+            </div>
+          </div>
+
+          <div class="small-12 medium-6 columns">
+            <div class="country">
+              <label for="country">Country</label>
+              <input type="text" name="contact[country]" class="full" id="country" />
+            </div>
+    
+            <div class="store">
+              <label for="store">Store</label>
+              <input type="text" name="contact[store]" class="full" id="store" />
+            </div>
+          </div>
+
+          <div class="small-12 medium-12 columns">
+            <div class="message">
+              <label for="message">Message*</label>
+              <textarea name="contact[body]" required="" class="full" id="message"></textarea>
+            </div>
+          </div>
+
+          <div class="small-12 medium-12 columns">
+            <div class="submit">
+              <input type="submit" value="REGISTER" />
+            </div>
+          </div>
+        </div>
+      {% endform %}
+    </div>
+    
+  </section>
+</div>

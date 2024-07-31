@@ -1,0 +1,38 @@
+<div class="account-holder {% unless section.settings.header_secondary_icons %}has-text-links{% else %}has-icon-links{% endunless %} uppercase-{{ settings.menu_uppercase }}">
+	{% if customer %}
+	  {% assign profile_link = routes.account_url %}
+	  {% capture profile_text %}
+	    {{ 'general.header.my_account' | t }}
+	  {% endcapture %}
+	{% else %}
+	  {% assign profile_link = routes.account_login_url %}
+	  {% capture profile_text %}
+	    {{ 'general.header.login' | t }}
+	  {% endcapture %}
+	{% endif %}
+	{% unless section.settings.header_secondary_icons %}
+	  {% if shop.customer_accounts_enabled %}
+	    <a href="{{ profile_link | escape }}" id="quick_profile" class="{% if template contains 'customer' %}active{% endif %}">{{ profile_text }}</a>
+	  {% endif %}
+	  {% if section.settings.header_search %}
+	    <a href="{{ routes.search_url }}/#searchpopup" class="mfp-inline {% if template == 'search' %}active{% endif %}" data-class="quick-search" id="quick_search">{{ 'general.header.search' | t }}</a>
+	  {% endif %}
+	  <a href="{{ routes.cart_url }}" id="quick_cart" class="{% if template == 'cart' %}active{% endif %}">{{ 'general.header.cart' | t }} <span class="float_count">{%- if cart.item_count > 99 -%}
+			{%- render 'svg-icons' with 'thb-asterisk' -%}
+		{%- else -%}
+		{{ cart.item_count }}
+		{%- endif -%}</span></a>
+	{% else %}
+	  {% if shop.customer_accounts_enabled %}
+	    <a href="{{ profile_link | escape }}" id="quick_profile" title="{{ profile_text | escape }}">{% render 'svg-icons' with 'thb-account' %}</a>
+	  {% endif %}
+	  {% if section.settings.header_search %}
+	    <a href="{{ routes.search_url }}/#searchpopup" class="mfp-inline" id="quick_search" title="{{ 'general.header.search' | t | escape }}">{% render 'svg-icons' with 'thb-search' %}</a>
+	  {% endif %}
+	  <a href="{{ routes.cart_url }}" id="quick_cart">{% render 'svg-icons' with 'thb-cart' %} <span class="float_count">{%- if cart.item_count > 99 -%}
+			{%- render 'svg-icons' with 'thb-asterisk' -%}
+		{%- else -%}
+		{{ cart.item_count }}
+		{%- endif -%}</span></a>
+	{% endunless %}
+</div>

@@ -1,0 +1,51 @@
+{
+  "sections": {
+    "1658855126657180d1": {
+      "type": "custom-liquid",
+      "custom_css": [
+
+      ],
+      "settings": {
+        "custom_liquid": "<img src=\"https:\/\/cdn.shopify.com\/s\/files\/1\/1527\/1793\/files\/Girls-Extended.jpg?v=1694529552\" class=\"hero\" alt=\"Contact Schok\" style=\"width: 100%;\">"
+      }
+    },
+    "content": {
+      "type": "contact-form",
+      "blocks": {
+        "ead74d51-940e-498c-bbcc-e58bbc696f83": {
+          "type": "text",
+          "settings": {
+            "heading": "Contact Us",
+            "text": "<p>1-888-48 SCHOK<br\/>Our phone no.<\/p>"
+          }
+        },
+        "9db50bfd-48cf-4fba-8b13-b3342c1b40c4": {
+          "type": "text",
+          "settings": {
+            "heading": "",
+            "text": "<p>support@schokgear.com<br\/>Our email<br\/><br\/>Schok, LLC. 5850 Town and Country Blvd., Suite 203, Frisco, TX 75034<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "ead74d51-940e-498c-bbcc-e58bbc696f83",
+        "9db50bfd-48cf-4fba-8b13-b3342c1b40c4"
+      ],
+      "custom_css": [
+        "#contact_form .button {border: #63a4d8 solid 2px; border-radius: 25px; background-color: #63a4d8; text-transform: uppercase;}",
+        "#contact_form .button:hover {border: #2f2f2f solid 2px; border-radius: 25px; color: #2f2f2f; background-color: #fff;}",
+        ".shopify-contact-text-column p {opacity: 0.9;}",
+        "@media and screen and (max-width: 767px) {.shopify-contact-text-column .contact-form-block {margin-bottom: 30px; }}"
+      ],
+      "settings": {
+        "show_phone_number": true,
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": false
+      }
+    }
+  },
+  "order": [
+    "1658855126657180d1",
+    "content"
+  ]
+}

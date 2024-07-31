@@ -1,0 +1,40 @@
+<div class="variations">
+	{%- assign current_variant = product.selected_or_first_available_variant -%}
+	{% unless product.has_only_default_variant %}
+		<div class="js-product-options no-js-hidden">
+			{% for option in product.options_with_values %}
+				{% liquid
+					assign option_name = option.name | downcase | escape
+					assign option_type = 'dropdown'
+					if option_name == 'color' and color_picker
+						assign option_type = 'color'
+					endif
+				%}
+				{% render 'product-option', option_type: option_type, product: product, option: option, option_loop: forloop %}
+			{% endfor %}
+			<input class="js-product-variant-id-input" type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" />
+		</div>
+	{% else %}
+		<input name="id" id="productSelect" type="hidden" value="{{ current_variant.id }}" />
+	{% endunless %}
+	<noscript class="product-form__noscript-wrapper-{{ section.id }}">
+		<div class="product-form__input{% if product.has_only_default_variant %} hidden{% endif %}">
+			<label for="Variants-{{ section.id }}">{{ 'products.product.product_variants' | t }}</label>
+			<div class="select">
+				<select name="id" id="Variants-{{ section.id }}" class="select__select">
+					{%- for variant in product.variants -%}
+						<option
+							{% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}
+							{% if variant.available == false %}disabled{% endif %}
+							value="{{ variant.id }}"
+						>
+							{{ variant.title }}
+							{%- if variant.available == false %} - {{ 'products.product.soldout' | t }}{% endif %}
+							- {{ variant.price | money | strip_html }}
+						</option>
+					{%- endfor -%}
+				</select>
+			</div>
+		</div>
+	</noscript>
+</div>

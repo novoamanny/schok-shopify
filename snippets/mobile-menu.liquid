@@ -1,0 +1,126 @@
+<!-- Start Mobile Menu -->
+<nav id="mobile-menu" class="side-panel" role="dialog">
+	<header>
+		<h6>{{ 'general.menu' | t }}</h6>
+		<a href="#" class="thb-close" title="{{ 'general.close' | t }}">{% render 'svg-icons' with 'thb-close' %}</a>
+	</header>
+	<div class="side-panel-content">
+		{% if header_search %}
+		<form role="search" method="get" class="searchform" action="/search">
+			<fieldset>
+				<input type="search" class="search-field pill" placeholder="{{ 'search.placeholder' | t | escape }}" value="{{ search.terms | replace: '*', '' }}" name="q" autocomplete="off">
+				<input type="hidden" name="options[prefix]" value="last">
+				<button class="widget_subscribe_btn submit" type="submit">{% render 'svg-icons' with 'thb-search-submit' %}</button>
+			</fieldset>
+		</form>
+		{% endif %}
+    <ul class="mobile-menu">
+			{% for link in menu.links %}
+			  {% assign has_sub_menu = false %}
+			  {% if link.links.size > 0 %}
+			    {% assign has_sub_menu = true %}
+				{% endif %}
+			  <li class="{% if has_sub_menu %}menu-item-has-children{% endif %}">
+					<div class="link-container">
+				    <a href="{{ link.url }}" title="{{ link.title | escape }}"{%- if link.active %} aria-current="page"{% endif -%}>{{ link.title }}</a> {% if has_sub_menu %}<span></span>{% endif %}
+					</div>
+			    {% if has_sub_menu %}
+				    <ul class="sub-menu">
+			        {% for l in link.links %}
+								{% assign has_sub_menu = false %}
+							  {% if l.links.size > 0 %}
+							    {% assign has_sub_menu = true %}
+								{% endif %}
+				        <li class="{% if has_sub_menu %}menu-item-has-children{% endif %}" role="none">
+									<div class="link-container">
+					          <a href="{{ l.url }}" title="{{ l.title | escape }}" role="menuitem">{{ l.title }}</a>{% if has_sub_menu %}<span></span>{% endif %}
+									</div>
+									{% if has_sub_menu %}
+										<ul class="sub-menu" tabindex="-1">
+											{% for sub_link in l.links %}
+												{% assign has_sub_menu = false %}
+												{% if sub_link.links.size > 0 %}
+													{% assign has_sub_menu = true %}
+												{% endif %}
+												<li class="{% if has_sub_menu %}menu-item-has-children{% endif %}" role="none">
+													<a href="{{ sub_link.url }}" title="{{ sub_link.title | escape }}" role="menuitem">{{ sub_link.title }} {% if has_sub_menu %}<span></span>{% endif %}</a>
+												</li>
+											{% endfor %}
+										</ul>
+									{% endif %}
+				        </li>
+							{% endfor %}
+				    </ul>
+			    {% endif %}
+			  </li>
+		  {% endfor %}
+    </ul>
+
+		<ul class="mobile-menu mobile-secondary-menu">
+			{% if customer %}
+			  {% assign profile_link = routes.account_url %}
+			  {% capture profile_text %}
+			    {{ 'general.header.my_account' | t }}
+			  {% endcapture %}
+			{% else %}
+			  {% assign profile_link = routes.account_login_url %}
+			  {% capture profile_text %}
+			    {{ 'general.header.login' | t }}
+			  {% endcapture %}
+			{% endif %}
+			<li>
+				{% if shop.customer_accounts_enabled %}
+			    <a href="{{ profile_link | escape }}" class="{% if template contains 'customer' %}active{% endif %}">{{ profile_text }}</a>
+			  {% endif %}
+			</li>
+			{% if mobile_secondary_menu %}
+				{% for link in mobile_secondary_menu.links %}
+				  {% assign has_sub_menu = false %}
+				  {% if link.links.size > 0 %}
+				    {% assign has_sub_menu = true %}
+					{% endif %}
+				  <li class="{% if has_sub_menu %}menu-item-has-children{% endif %}{% if link.active %} active{% endif %}">
+						<div class="link-container">
+					    <a href="{{ link.url }}" title="{{ link.title | escape }}"{%- if link.active %} aria-current="page"{% endif -%}>{{ link.title }}</a> {% if has_sub_menu %}<span></span>{% endif %}
+						</div>
+				    {% if has_sub_menu %}
+					    <ul class="sub-menu" tabindex="-1">
+				        {% for l in link.links %}
+									{% assign has_sub_menu = false %}
+								  {% if l.links.size > 0 %}
+								    {% assign has_sub_menu = true %}
+									{% endif %}
+					        <li class="{% if has_sub_menu %}menu-item-has-children{% endif %}{% if l.active %} active{% endif %}" role="none">
+										<div class="link-container">
+						          <a href="{{ l.url }}" title="{{ l.title | escape }}" role="menuitem">{{ l.title }}</a>{% if has_sub_menu %}<span></span>{% endif %}
+										</div>
+										{% if has_sub_menu %}
+											<ul class="sub-menu" tabindex="-1">
+												{% for sub_link in l.links %}
+													{% assign has_sub_menu = false %}
+													{% if sub_link.links.size > 0 %}
+														{% assign has_sub_menu = true %}
+													{% endif %}
+													<li class="{% if has_sub_menu %}menu-item-has-children{% endif %}{% if sub_link.active %} active{% endif %}" role="none">
+														<a href="{{ sub_link.url }}" title="{{ sub_link.title | escape }}" role="menuitem">{{ sub_link.title }} {% if has_sub_menu %}<span></span>{% endif %}</a>
+													</li>
+												{% endfor %}
+											</ul>
+										{% endif %}
+					        </li>
+								{% endfor %}
+					    </ul>
+				    {% endif %}
+				  </li>
+			  {% endfor %}
+			{% endif %}
+    </ul>
+		<div class="social-links">
+			{% render 'social-links' %}
+		</div>
+	</div>
+	<div class="thb-mobile-menu-switchers">
+		{% render 'localization', show_language_switcher: show_language_switcher, show_currency_switcher: show_currency_switcher %}
+	</div>
+</nav>
+<!-- End Mobile Menu -->

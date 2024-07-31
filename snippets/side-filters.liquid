@@ -1,0 +1,161 @@
+<link rel="stylesheet" href="{{ 'sidebar.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>
+<link rel="stylesheet" href="{{ 'sidebar.css' | asset_url }}" media="all">
+</noscript>
+{{ 'nouislider.min.js' | asset_url | script_tag }}
+<div id="side-filters" class="side-panel" role="dialog">
+	<header>
+		<h6>{{ 'general.collection.filter' | t }}</h6>
+		<a href="#" class="thb-close" title="Close">{% render 'svg-icons' with 'thb-close' %}</a>
+	</header>
+	<div class="side-panel-content">
+	 <form id="FacetFiltersForm" class="facets__form">
+			{%- if results.terms -%}
+	      <input type="hidden" name="q" value="{{ results.terms | escape }}">
+	      <input name="options[prefix]" type="hidden" value="last">
+	    {%- endif -%}
+			{%- unless results.filters == empty -%}
+				{%- for filter in results.filters -%}
+					{% case filter.type %}
+	          {% when 'boolean' or 'list' %}
+							{%- assign filter_name = filter.label | downcase | escape -%}
+					    <div class="widget widget_layered_nav{% if forloop.last %} last-widget{% endif %}">
+					      <h6>{{ filter.label | escape }}</h6>
+				        <ul class="{{ filter.type | escape }}-{{ filter.label | downcase | escape }}">
+									{%- liquid
+										if filter_name == 'color'
+											assign custom_colors = settings.color_swatches | newline_to_br | split: '<br />'
+											assign key_array = ''
+											assign val_array = ''
+
+											for color in custom_colors
+												assign key = color | split: ':' | first | rstrip
+												assign value = color | split: ':' | last | lstrip
+												assign key_array = key_array | append: ',' | append: key
+												assign val_array = val_array | append: ',' | append: value
+											endfor
+
+											assign key_array = key_array | remove_first: ',' | split: ','
+											assign val_array = val_array | remove_first: ',' | split: ','
+										endif
+									-%}
+				        	{%- for value in filter.values -%}
+					          <li>
+											<input type="checkbox"
+				                name="{{ value.param_name }}"
+				                value="{{ value.value }}"
+				                id="Filter-{{ filter.label | escape }}-{{ forloop.index }}"
+				                {% if value.active %}checked{% endif %}
+				                {% if value.count == 0 and value.active == false %}disabled{% endif %}
+				              >
+
+											{%- liquid
+												if filter_name == 'color'
+													assign color_value = value.label | escape
+													assign bg_value = ''
+													for custom_color in key_array
+														if custom_color == color_value
+															assign color_value = val_array[forloop.index0]
+														endif
+													endfor
+													if color_value contains '.'
+														assign bg_value = color_value | file_url
+														assign color_value = 'var(--bg-body)'
+													endif
+												endif
+											-%}
+											<label for="Filter-{{ filter.label | escape }}-{{ forloop.index }}" class="facet-checkbox{% if value.count == 0 and value.active == false %} facet-checkbox--disabled{% endif %}" style="--bg-color: {{ value.value | replace: ' ', '-' | downcase | escape }}; {%- if bg_value -%} --option-bg: url('{{ bg_value | escape }}');{%- endif -%}">
+												{{ value.label | escape }}
+											</label>
+
+											<span class="count">{{ value.count }}</span>
+					          </li>
+									{%- endfor -%}
+				        </ul>
+					    </div>
+						{% when 'price_range' %}
+						<div class="widget widget_price_filter{% if forloop.last %} last-widget{% endif %}">
+							<h6>{{ filter.label | escape }}</h6>
+							<div class="{{ filter.type | escape }}-{{ filter.label | downcase | escape }}">
+								{% liquid
+	                assign currencies_using_comma_decimals = 'ANG,ARS,BRL,BYN,BYR,CLF,CLP,COP,CRC,CZK,DKK,EUR,HRK,HUF,IDR,ISK,MZN,NOK,PLN,RON,RUB,SEK,TRY,UYU,VES,VND' | split: ','
+	                assign uses_comma_decimals = false
+	                if currencies_using_comma_decimals contains cart.currency.iso_code
+	                  assign uses_comma_decimals = true
+	                endif
+
+									assign max_value = nil
+									assign min_value = nil
+									if uses_comma_decimals
+										if filter.max_value.value
+											assign max_value = filter.max_value.value | money_without_currency | replace: '.', '' | replace: ',', '.'
+										endif
+										if filter.min_value.value
+											assign min_value = filter.min_value.value | money_without_currency | replace: '.', '' | replace: ',', '.'
+										endif
+										assign range_max = filter.range_max | money_without_currency | replace: '.', '' | replace: ',', '.'
+									else
+										if filter.max_value.value
+											assign max_value = filter.max_value.value | money_without_currency | replace: ',', ''
+										endif
+										if filter.min_value.value
+											assign min_value = filter.min_value.value | money_without_currency | replace: ',', ''
+										endif
+										assign range_max = filter.range_max | money_without_currency | replace: ',', ''
+									endif
+	              %}
+								<div class="price_slider_wrapper">
+									<div
+										class="price_slider"
+										data-min-value="{{ min_value }}"
+	                  data-min-name="filter.v.price.gte"
+	                  data-min="0"
+	                  data-max-value="{{ max_value }}"
+	                  data-max-name="filter.v.price.lte"
+	                  data-max="{{ range_max }}">
+									</div>
+									<div class="price_slider_amount no-js-visible">
+										<div>
+											<span class="field-currency">{{ cart.currency.symbol }}</span>
+											<input class="field__input field__input_min"
+		                    name="{{ filter.min_value.param_name }}"
+		                    id="Filter-{{ filter.label | escape }}-GTE"
+		                    value="{{ min_value }}"
+		                    type="text"
+												placeholder="0"
+		                  >
+		                  </input>
+										</div>
+										<div>
+											<span class="field-currency">{{ cart.currency.symbol }}</span>
+											<input class="field__input field__input_max"
+		                    name="{{ filter.max_value.param_name }}"
+		                    id="Filter-{{ filter.label | escape }}-LTE"
+		                    value="{{ max_value }}"
+		                    type="text"
+												placeholder="{{ filter.range_max | money_without_currency }}"
+		                  >
+		                  </input>
+										</div>
+									</div>
+									<div class="price_label no-js-hidden">
+										{{ 'general.collection.price' | t }} <span class="from"></span> &mdash; <span class="to"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endcase %}
+				{%- endfor -%}
+			{%- else -%}
+				<p>{{ 'general.collection.no_filters_available' | t }}</p>
+			{%- endunless -%}
+			<div class="side-panel-footer">
+				<button class="button alt filter-clear no-js-hidden">{{ 'general.collection.clear' | t }}</button>
+				<noscript>
+					<a class="button alt filter-clear" href="{{ routes.all_products_collection_url }}">{{ 'general.collection.clear' | t }}</a>
+				</noscript>
+				<button class="button filter-apply">{{ 'general.collection.apply' | t }}</button>
+			</div>
+		</form>
+	</div>
+</div>

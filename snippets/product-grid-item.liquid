@@ -1,0 +1,66 @@
+{%- liquid
+	assign sizes = '320x320,640x640'
+	assign ratio = 1
+	assign placeholder_size = '100'
+  if settings.image_ratio == 'portrait'
+    assign sizes = '320x390,640x780'
+		assign ratio = 0.82
+		assign placeholder_size = '120'
+  elsif settings.image_ratio == 'adapt'
+    assign sizes = '320x0,640x0'
+		if product.featured_media
+			assign ratio = product.featured_media.aspect_ratio
+		endif
+  endif
+
+-%}
+<div class="product {{ grid_item_width | strip_newlines }} thb-listing-{{ settings.products_style | escape }} columns {{ animation | escape }}"  {{ block.shopify_attributes }}>
+  <figure class="product_thumbnail{% if settings.products_hover_image %} thb_hover{% endif %}" style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;">
+    {% render 'product-badge', product: product %}
+    <a href="{{ product.url | within: collection }}" title="{{ product.title | escape }}">
+      {% if settings.products_hover_image %}
+        {% if product.images.size > 1 %}
+        <span class="product_thumbnail_hover">
+          {%- render 'responsive-image', image: product.images[1], sizes: sizes -%}
+        </span>
+        {% endif %}
+      {% endif %}
+			{% if product.featured_image %}
+      	{%- render 'responsive-image', image: product.featured_image, sizes: sizes -%}
+			{% else %}
+				<div class="thb-placeholder">
+					{{ 'product-1' | placeholder_svg_tag }}
+				</div>
+			{% endif %}
+    </a>
+  </figure>
+	{%- if settings.show_products_vendor -%}
+    <div class="product-vendor">{{ product.vendor }}</div>
+  {%- endif -%}
+  <h3><a href="{{ product.url | within: collection }}" title="{{ product.title | escape }}">{{ product.title }}</a></h3>
+  {% assign current_variant = product.selected_or_first_available_variant %}
+  <div class="product_after_title">
+    <div class="product_after_shop_loop_price">
+       {% render 'product-price', product: product %}
+    </div>
+    <div class="product_after_shop_loop_buttons">
+      <a href="{{ product.url | within: collection }}" class="add_to_cart_button{% if product.variants.size == 1 %}  ajax_add_to_cart{% endif %}{% unless product.available %} outofstock{% endunless %}" data-id="{{ current_variant.id }}" data-addingtocart="{{ 'products.product.adding_to_cart' | t | escape }}">
+        {% if product.available %}
+          {% if product.variants.size == 1 %}{{ 'products.product.add_to_cart' | t | escape }}{% else %}{{ 'products.product.select_options' | t | escape }}{% endif %}
+        {% else %}
+          {{ 'products.product.out_of_stock' | t }}
+        {% endif %}
+      </a>
+    </div>
+  </div>
+	{%- if settings.show_products_rating and product.metafields.reviews.rating.value != blank -%}
+	{% liquid
+	 assign rating = product.metafields.reviews.rating.value.rating | divided_by: product.metafields.reviews.rating.value.scale_max | times: 100 | append: '%'
+	%}
+	<div class="star-rating-container">
+		<div class="star-rating" role="img">
+			<span aria-hidden="true" style="width: {{ rating | escape }};"></span>
+		</div>
+	</div>
+  {%- endif -%}
+</div>

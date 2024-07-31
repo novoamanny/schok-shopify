@@ -1,0 +1,17 @@
+<nav id="quick-shop" class="side-panel">
+	<header>
+  	<h6>{{ 'general.quick_shop' | t }}</h6>
+  	<a href="#" class="thb-close" title="{{ 'general.close' | t }}">{% render 'svg-icons' with 'thb-close' %}</a>
+  </header>
+  <div class="side-panel-content">
+  	<div class="product_container">
+      {% if settings.quick_shop_collection %}
+      <div class="products row">
+        {% for product in collections[settings.quick_shop_collection].products %}
+          {% render 'product-grid-item' product: product, grid_item_width: 'small-6' %}
+        {% endfor %}
+      </div>
+      {% endif %}
+		</div>
+	</div>
+</nav>

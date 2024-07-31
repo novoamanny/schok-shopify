@@ -1,0 +1,351 @@
+<section id="section-hero">
+  <div class="content">
+    <div class="tagline">
+      <h1>Great technology should <br />belong to <strong>everyone!</strong></h1>
+      <h2 style="font-weight: 400;">It's a schok, isn't it?</h2>
+      <a href="/pages/about" class="button">Our Mission</a>
+    </div>
+    <div class="tagline tagline2">
+      <h1>Great technology <br /> should belong <br /> to <strong>everyone!</strong></h1>
+      <h2 style="font-weight: 400;">It's a schok, isn't it?</h2>
+      <a href="/pages/about" class="button">Our Mission</a>
+    </div>
+    <div class="phone-set">
+      <div class="owl-carousel">
+        <div class="slide first">
+          <img src="{{ 'Homepage-hero-phone.png' | asset_url }}" alt="Schok Freedom Turbo" class="hero-phone-1">
+          <div class="product-title-bubble">Schok Freedom Turbo XL</div>
+          <div class="price-bubble">{{ all_products['schok-freedom-turbo-xl-1'].price | money }}</div>
+          <div class="square-shape"></div>
+        </div>
+        <div class="slide second">
+          <img src="{{ 'SCH-classic-transparent.png' | asset_url }}" alt="Schok Classic" class="hero-phone-1">
+          <div class="product-title-bubble">Schok Classic</div>
+          <div class="price-bubble">{{ all_products['schok-classic-flip-phone-4g-lte'].price | money }}</div>
+          <div class="square-shape"></div>
+        </div>
+        <div class="slide third">
+          <img src="{{ 'SCH-connect-turbo-transparent.png' | asset_url }}" alt="Schok Connect Turbo" class="hero-phone-1">
+          <div class="product-title-bubble">Schok Connect Turbo</div>
+          <div class="price-bubble">{{ all_products['schok-connect-turbo-hotspot'].price | money }}</div>
+          <div class="square-shape"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="lock-container">
+<div class="lock-width">
+
+<section id="section-ftxl">
+  <div id="spinner" class="set flex">
+    <div class="image-set">
+      <img src="{{ 'homepage-schoking.jpg' | asset_url }}" class="hero-phone-1 st-image" alt="Schok Freedom Turbo" data-aos="fade-right" data-aos-duration="3000">
+      <img id="spin" src="{{ 'the-schoking-truth.png' | asset_url }}" alt="The Schoking Truth" class="the-schoking-truth spin">
+      <img id="spin2" src="{{ 'the-schoking-truth-alt.png' | asset_url }}" alt="The Schoking Truth" class="the-schoking-truth">
+    </div>
+    <div class="copy">
+      <h2>The <span>Schok'ing</span> Truth</h2>
+      <p>Somewhere in our enthusiasm for technology we’ve been brainwashed into thinking that the cool stuff always comes with a hefty price tag. Well, consider this your <span style="font-weight: 700;">wake-up call</span>. </p>
+      <p>Schok is challenging the industry. Schok is taking a stand. Schok is changing the game. </p>
+      <p>The audacity of pricing phones higher than the stratosphere is unacceptable. Schok gives you all the tech you could want for a whole lot less money than you’ve been conditioned to expect. Great technology belongs to everyone. That’s the Schok’ing Truth. And the truth will set you free. </p>
+      <a href="/pages/about" class="button blue">Learn More</a>
+    </div>
+  </div>
+</section>
+
+<section id="section-three-columns" data-aos="fade-down" data-aos-duration="3000">
+  <div class="set flex">
+    <div class="col first">
+      <h2>The Schok Promise</h2>
+      <p>Schok exists to make consumers' lives easier by making great technology more <span style="font-weight: 700;">accessible</span> to more people.</p>
+    </div>
+    <div class="col second">
+      <h2>Why Choose Schok?</h2>
+      <p>Ethical business practices, global diversity, and environmental <span style="font-weight: 700;">sustainability</span>, all available for anyone who wants it. That's Schok.</p>
+    </div>
+    <div class="col third">
+      <h2>The Schok Guarantee</h2>
+      <p>You rely on technology to be there when you need it. You shouldn't have a problem with your Schok device, but if you do, we're always here for you and we'll make things right.</p>
+    </div>
+  </div>
+</section>
+
+<section id="section-tiles">
+  <h2>Experience Our Full Lineup</h2>
+  <p>Which is the best fit for you?</p>
+  <div class="flex">
+    <div class="col first">
+      <div class="content-set">
+        <a href="/pages/freedom-turbo-xl">
+          <img class="img-bg" src="{{ all_products['schok-freedom-turbo-xl-1'].images[0] | img_url: '240x434' }}" alt="{{product.images[0].alt}}" />
+          <img class="rollover first" src="{{ all_products['schok-freedom-turbo-xl-1'].images[1] | img_url: '240x434' }}" alt="{{product.images[1].alt}}" />
+        </a>
+        <h2 class='name'><span style="font-weight: 400;">Schok</span> Freedom Turbo XL</h2>
+        <p>{{ all_products['schok-freedom-turbo-xl-1'].price | money }}</p>
+        <form method="post" action="/cart/add">
+          <input name="id" value="41638547030166" type="hidden" />
+          <input name="add" value="Add to Cart" type="submit" />
+        </form>
+      </div>
+    </div>
+    <div class="col second">
+      <div class="content-set">
+        <a href="/pages/connect-turbo-hotspot">
+          <img class="img-bg" src="{{ all_products['schok-connect-turbo-hotspot'].images[0] | img_url: '216x308' }}" alt="{{product.images[0].alt}}" />
+          <img class="rollover first" src="{{ all_products['schok-connect-turbo-hotspot'].images[1] | img_url: '240x434' }}" alt="{{product.images[2].alt}}" />
+        </a>
+        <h2 class='name'><span style="font-weight: 400;">Schok Connect Turbo</span> Hot Spot</h2>
+        <p>{{ all_products['schok-connect-turbo-hotspot'].price | money }}</p>
+        <form method="post" action="/cart/add">
+          <input name="id" value="41320335999126" type="hidden" />
+          <input name="add" value="Add to Cart" type="submit" />
+        </form>
+      </div>
+    </div>
+    <div class="col third">
+      <div class="content-set">
+        <a href="/pages/classic-landing">
+          <img class="img-bg img-bg-alt" src="{{ all_products['schok-classic-flip-phone-4g-lte'].images[0] | img_url: '329x329' }}" alt="{{product.images[0].alt}}" />
+          <img class="rollover first" src="{{ all_products['schok-classic-flip-phone-4g-lte'].images[1] | img_url: '240x434' }}" alt="{{product.images[1].alt}}" />
+        </a>
+        <h2 class='name'><span style="font-weight: 400;">Schok</span> Classic</h2>
+        <p>{{ all_products['schok-classic-flip-phone-4g-lte'].price | money }}</p>
+        <form method="post" action="/cart/add">
+          <input name="id" value="35240521138326" type="hidden" />
+          <input name="add" value="Add to Cart" type="submit" />
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+  
+<section id="section-product-tiles">
+  <div class="set flex first reverse">
+    <div class="col first padding">
+      
+       <div class="gradient-divider gradient-animation-home-first"></div>
+      <h2>Schok Freedom Turbo XL</h2>
+      <p>Experience the freedom for yourself. Stay creative. <br />Stay entertained. Stay connected.</p>
+      <ul>
+        <li>High quality cameras</li>
+        <li>Stunning display</li>
+        <li>Fast, long-lasting battery life</li>
+      </ul>
+      <a href="/pages/freedom-turbo-xl" class="button blue" >Explore Freedom</a>
+    </div>
+    <div class="col second gradient">
+      <img src="{{ 'schok-ftxl-w-shadow-v2.png' | asset_url }}" class="hotspot" alt="Schok Freedom Turbo" data-aos="fade-left" data-aos-duration="3000">
+    </div>
+  </div>
+  <div class="set flex second">
+    <div class="col first gradient">
+      <img src="{{ 'schok-classic-w-shadow-v2.png' | asset_url }}" class="hotspot" alt="Schok Freedom Turbo" data-aos="fade-right" data-aos-duration="3000">
+    </div>
+    <div class="col second padding">
+      
+       <div class="gradient-divider gradient-animation-home-second"></div>
+      <h2>Schok Classic</h2>
+      <p>The most advanced flip phone in its class,<br />where simplicity meets possibility.</p>
+      <ul>
+        <li>Easy-to-use keypad</li>
+        <li>Long-lasting battery</li>
+        <li>Clear sound quality</li>
+      </ul>
+      <a href="/pages/classic-landing" class="button blue" >Shop Classic</a>
+    </div>
+  </div>
+  <div class="set flex third reverse">
+    <div class="col first padding">
+      
+       <div class="gradient-divider gradient-animation-home-third"></div>
+      <h2>Schok Connect Turbo</h2>
+      <p>A full-featured hotspot ready to connect you with the world, no matter where you choose to be.</p>
+      <ul>
+        <li>Fast and reliable connectivity</li>
+        <li>Effortlessly portable</li>
+        <li>Easy compatibility</li>
+      </ul>
+      <a href="/pages/connect-turbo-hotspot" class="button blue" >Connect Now</a>
+    </div>
+    <div class="col second gradient">
+      <img src="{{ 'schok-connect-turbo-w-shadow-v2.png' | asset_url }}" class="hotspot" alt="Schok Freedom Turbo" data-aos="fade-left" data-aos-duration="3000">
+    </div>
+  </div>
+</section>
+
+<section id="section-three-columns" class="testimonials-set">
+  <div class="title-area">
+    <h2>Testimonials</h2>
+    <p class='subtitle'>Read what people think of Schok.</p>
+  </div>
+  <div class="set flex">
+    <div class="col first">
+      <img src="{{ 'person-red-bg.png' | asset_url }}" class="author-image" alt="Schok Freedom Turbo">
+      <p >I really appreciate your Customer Service, THANKS!</p>
+      <p class="author">Yaakov A.</p>
+    </div>
+    <div class="col second">
+      <img src="{{ 'person-orange-bg.png' | asset_url }}" class="author-image" alt="Schok Freedom Turbo">
+      <p >Impressed with the quality of the phone</p>
+      <p class="author">Tijani S.</p>
+    </div>
+    <div class="col third">
+      <img src="{{ 'person-blue-bg.png' | asset_url }}" class="author-image" alt="Schok Freedom Turbo">
+      <p >Awesome device, looking forward to see what else you come up with!!</p>
+      <p class="author">Terry M.</p>
+    </div>
+  </div>
+</section>
+
+<section id="section-partners">
+  <div class="set flex">
+    <div class="col first">
+      <h2>Our Proud Partners</h2>
+      <p>Schok has established valuable partnerships with carriers and brands in the tech industry to bring innovative and high-quality products to the market.</p>
+    </div>
+    <div class="col second">
+      <img src="{{ 'proud-partners.png' | asset_url }}" class="featured-image" alt="Proud Partners">
+    </div>
+  </div>
+</section>
+
+<section id="section-2" style="display: none;">
+  <div class="flex">
+    <div class="col first">
+      <div class="content-set" data-aos="fade-up" data-aos-duration="3000">
+        <h2>Schok <strong>Classic</strong></h2>
+        <p>The most advanced flip phone in its class,<br /> where simplicity meets possibility.</p>
+        <a href="/pages/connect-turbo-hotspot" class="button">Learn More</a>
+      </div>
+    </div>
+    <div class="col second">
+      <div class="image-bg">
+        <div class="content-set" data-aos="fade-up" data-aos-duration="3000">
+          <h2>Schok <strong>Connect Turbo</strong></h2>
+          <p>A full-featured hotspot ready to connect you with the world, no matter where you choose to be.</p>
+          <a href="/pages/connect-turbo-hotspot" class="button">Learn More</a>
+          <!-- <img src="assets/images/content/home/schok-connect-turbo-tilted.png" class="featured" alt="Schok Connect Turbo"> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+</div>
+
+<section id="section-partners-loop">
+  <div class="set">
+    <div class="client-slider">
+    <div class="client-slide-track">
+      <div class="client-slide">
+        <img src="{{ 't-mobile-logo-white.png' | asset_url }}"class="featured-image" height="100" width="250" alt="T-Mobile logo" loading="lazy" />
+      </div>
+      <div class="client-slide">
+        <img src="{{ 'ATT-logo-white.png' | asset_url }}"class="featured-image" height="100" width="250" alt="T-Mobile logo" loading="lazy" />
+      </div>
+      <div class="client-slide">
+        <img src="{{ 'verizon-white.png' | asset_url }}"class="featured-image" height="100" width="250" alt="T-Mobile logo" loading="lazy" />
+      </div>
+      <div class="client-slide">
+        <img src="{{ 'amazon-white.png' | asset_url }}"class="featured-image" height="100" width="250" alt="T-Mobile logo" loading="lazy" />
+      </div>
+      <div class="client-slide">
+        <img src="{{ 'walmart-white.png' | asset_url }}"class="featured-image" height="100" width="250" alt="T-Mobile logo" loading="lazy" />
+      </div>
+       <div class="client-slide">
+        <img src="{{ 'target-white.png' | asset_url }}"class="featured-image" height="100" width="250" alt="T-Mobile logo" loading="lazy" />
+      </div>
+      <div class="client-slide">
+        <img src="{{ 'net10-white.png' | asset_url }}"class="featured-image" height="100" width="250" alt="T-Mobile logo" loading="lazy" />
+      </div>
+      <div class="client-slide">
+        <img src="{{ 'assurance-white.png' | asset_url }}"class="featured-image" height="100" width="250" alt="T-Mobile logo" loading="lazy" />
+      </div>
+      <div class="client-slide">
+        <img src="{{ 'jeg-and-sons-white.png' | asset_url }}"class="featured-image" height="100" width="250" alt="T-Mobile logo" loading="lazy" />
+      </div>
+
+      <!-- Slides are cloned to help with infinite scroll effect -->
+
+      <div class="client-slide">
+        <img src="{{ 't-mobile-logo-white.png' | asset_url }}"class="featured-image" height="100" width="250" alt="T-Mobile logo" loading="lazy" />
+      </div>
+      <div class="client-slide">
+        <img src="{{ 'ATT-logo-white.png' | asset_url }}"class="featured-image" height="100" width="250" alt="T-Mobile logo" loading="lazy" />
+      </div>
+      <div class="client-slide">
+        <img src="{{ 'verizon-white.png' | asset_url }}"class="featured-image" height="100" width="250" alt="T-Mobile logo" loading="lazy" />
+      </div>
+      <div class="client-slide">
+        <img src="{{ 'amazon-white.png' | asset_url }}"class="featured-image" height="100" width="250" alt="T-Mobile logo" loading="lazy" />
+      </div>
+      <div class="client-slide">
+        <img src="{{ 'walmart-white.png' | asset_url }}"class="featured-image" height="100" width="250" alt="T-Mobile logo" loading="lazy" />
+      </div>
+      <div class="client-slide">
+        <img src="{{ 'target-white.png' | asset_url }}"class="featured-image" height="100" width="250" alt="T-Mobile logo" loading="lazy" />
+      </div>
+      <div class="client-slide">
+        <img src="{{ 'net10-white.png' | asset_url }}"class="featured-image" height="100" width="250" alt="T-Mobile logo" loading="lazy" />
+      </div>
+      <div class="client-slide">
+        <img src="{{ 'assurance-white.png' | asset_url }}"class="featured-image" height="100" width="250" alt="T-Mobile logo" loading="lazy" />
+      </div>
+      <div class="client-slide">
+        <img src="{{ 'jeg-and-sons-white.png' | asset_url }}"class="featured-image" height="100" width="250" alt="T-Mobile logo" loading="lazy" />
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<script src="{{ 'owl.carousel.min.js' | asset_url }}" type="text/javascript"></script>
+<script src="{{ 'aos.js' | asset_url }}" type="text/javascript"></script>
+
+<script>
+    AOS.init({
+    // Global settings:
+    disable: false, // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
+    startEvent: 'DOMContentLoaded', // name of the event dispatched on the document, that AOS should initialize on
+    initClassName: 'aos-init', // class applied after initialization
+    animatedClassName: 'aos-animate', // class applied on animation
+    useClassNames: false, // if true, will add content of `data-aos` as classes on scroll
+    disableMutationObserver: false, // disables automatic mutations' detections (advanced)
+    debounceDelay: 50, // the delay on debounce used while resizing window (advanced)
+    throttleDelay: 99, // the delay on throttle used while scrolling the page (advanced)
+
+
+    // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
+    offset: 120, // offset (in px) from the original trigger point
+    delay: 0, // values from 0 to 3000, with step 50ms
+    duration: 600, // values from 0 to 3000, with step 50ms
+    easing: 'ease', // default easing for AOS animations
+    once: false, // whether animation should happen only once - while scrolling down
+    mirror: false, // whether elements should animate out while scrolling past them
+    anchorPlacement: 'top-bottom', // defines which position of the element regarding to window should trigger the animation
+  });
+</script>
+<script>
+  $(document).ready(function(){
+    $('.owl-carousel').owlCarousel({
+      items:1,
+      autoHeight:true,
+      autoplay: false,
+      loop: true,
+      center: true,
+      nav: true,
+      animateIn: 'fadeIn',
+      animateOut: 'fadeOut',
+      
+    });
+  });
+</script>
+<style type="text/css">
+.owl-stage .fadeIn, .owl-stage .fadeOut {
+transition: ease all 3s !important;
+}
+</style>

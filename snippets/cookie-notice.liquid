@@ -1,0 +1,18 @@
+{% if settings.cookie_notice %}
+<aside class="thb-cookie-bar">
+	<div class="thb-cookie-text">
+  	{{ settings.cookie_notice_text }}
+	</div>
+	<button class="button-accept" title="{{ 'general.misc.i_accept' | t | escape }}">{{ 'general.misc.i_accept' | t }}</button>
+</aside>
+{% style %}
+.thb-cookie-bar {
+	background-color: {{ settings.cookie_bg_color }};
+	color: {{ settings.cookie_text_color }};
+}
+.thb-cookie-bar .button-accept,
+.thb-cookie-bar .thb-cookie-text a {
+	color: {{ settings.cookie_text_color }};
+}
+{% endstyle %}
+{% endif %}

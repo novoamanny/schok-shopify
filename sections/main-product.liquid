@@ -1,0 +1,774 @@
+{{ 'productpage.css' | asset_url | stylesheet_tag }}
+{%- if section.settings.product_image_feature == 'zoom' or request.design_mode -%}
+{{ 'vendor-product.min.js' | asset_url | script_tag }}
+{%- endif -%}
+{%- assign first_3d_model = product.media | where: "media_type", "model" | first -%}
+{%- if first_3d_model -%}
+  <link id="ModelViewerStyle" rel="stylesheet" href="https://cdn.shopify.com/shopifycloud/model-viewer-ui/assets/v1.0/model-viewer-ui.css" media="print" onload="this.media='all'">
+{%- endif -%}
+
+{% assign style = section.settings.product_style %}
+<div class="thb-product-detail thb-product-{{ style }} product {% if section.settings.disable_bottom_spacing %}section-no-bottom-margin{% endif %}">
+{% case style %}
+	{% when 'style1' %}
+  <div class="row">
+		<div class="small-12 large-7 columns">
+      <div class="product-gallery-container">
+				{%- if product.media.size > 1 -%}
+				<div id="product-thumbnails" class="product-thumbnails carousel slick no-js-hidden" data-navigation="false" data-autoplay="false" data-columns="4" data-asnavfor="#product-images" data-infinite="false">
+					{%- for media in product.media -%}
+					<div
+						data-id="{{ media.id }}"
+						class="product-thumbnail {% if product.selected_or_first_available_variant.featured_media.id == media.id %}slick-current{% endif %}"
+					>
+						{%- if media.media_type == 'model' -%}
+						<div class="product-thumbnail-icon">
+							{% render 'svg-icons' with 'thb-icon-3d-model' %}
+						</div>
+						{%- endif -%}
+						{%- if media.media_type == 'video' or media.media_type == 'external_video' -%}
+						<div class="product-thumbnail-icon">
+							{% render 'svg-icons' with 'thb-icon-play' %}
+						</div>
+						{%- endif -%}
+						{%- render 'responsive-image', image: media.preview_image, sizes: '168x0' -%}
+					</div>
+					{%- endfor -%}
+				</div>
+				{%- endif -%}
+				<div class="product-image-container">
+          <div id="product-images" class="product-images carousel slick" data-navigation="true" data-autoplay="false" data-columns="1" data-asnavfor="#product-thumbnails" data-image-feature="{{ section.settings.product_image_feature | escape }}">
+            {%- for media in product.media -%}
+              <div
+								data-full="{{ media.src | image_url }}"
+								class="product-image {% if product.selected_or_first_available_variant.featured_media.id == media.id %}slick-current{% endif %}"
+							>
+								{%- case media.media_type -%}
+									{% when 'image' %}
+										<div class="product-single__media product-single__media-image">
+			                {%- if section.settings.product_image_feature == 'lightbox' -%}
+			                  <a href="{{ media.src | image_url }}">
+			                {%- elsif section.settings.product_image_feature == 'zoom' -%}
+			                  <div class="zoom" data-full="{{ media.src | image_url }}">
+			                {%- endif -%}
+			                  {%- render 'responsive-image', image: media.preview_image, sizes: '320x0,640x0,960x0' -%}
+			                {%- if section.settings.product_image_feature == 'lightbox' -%}
+			                  </a>
+			                {%- elsif section.settings.product_image_feature == 'zoom' -%}
+			                  </div>
+			                {%- endif -%}
+										</div>
+									{% when 'external_video' %}
+										<div class="product-single__media product-single__media-external-video" data-provider="{{ media.host }}" style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%;" data-media-id="{{ media.id }}">
+											{{ media | external_video_tag: loading: "lazy", loop: "0", muted: "1" }}
+										</div>
+									{% when 'video' %}
+										<div class="product-single__media product-single__media-native-video" style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%;" data-media-id="{{ media.id }}">
+  										{{ media | video_tag: controls: true, loading: "lazy" }}
+										</div>
+									{% when 'model' %}
+									<div class="product-single__media product-single__media-model" style="padding-top: 100%" data-media-id="{{ media.id }}">
+										{{ media | model_viewer_tag }}
+									</div>
+									<button
+									 class="button large product__xr-button"
+									 type="button"
+									 data-shopify-xr
+									 aria-label="{{ 'products.product.xr_button_label' | t }}"
+									 data-shopify-model3d-id="{{ media.id }}"
+									 data-shopify-xr-hidden
+									 data-shopify-title="{{ product.title | escape }}"
+									 >
+									 {% render 'svg-icons' with 'thb-icon-3d-model' %}
+									 {{ 'products.product.xr_button' | t }}
+								 </button>
+								{% endcase %}
+              </div>
+            {%- endfor -%}
+          </div>
+				</div>
+      </div>
+    </div>
+    <div class="small-12 large-5 columns product-information">
+			{% form 'product', product %}
+				{% for block in section.blocks %}
+					{%- if block.type == '@app' -%}
+						{% render block %}
+					{% endif %}
+					{% if block.type == 'breadcrumbs' %}
+		      	{% render 'breadcrumbs' %}
+					{% endif %}
+					{% if block.type == 'title' %}
+		      	<h1 class="product_title uppercase-{{ block.settings.uppercase }}" {{ block.shopify_attributes }}>{{ product.title }}</h1>
+					{% endif %}
+					{% if block.type == 'price' %}
+						<div class="product-price-container" {{ block.shopify_attributes }}>
+							{% render 'product-price', product: product %}
+							{%- if section.settings.show_taxes_included != blank -%}
+								{%- if cart.taxes_included or shop.shipping_policy.body != blank -%}
+		              <div class="product__tax caption">
+		                {%- if cart.taxes_included -%}
+		                  {{ 'products.product.include_taxes' | t }}
+		                {%- endif -%}
+		                {%- if shop.shipping_policy.body != blank -%}
+		                  {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
+		                {%- endif -%}
+		              </div>
+								{%- endif -%}
+	            {%- endif -%}
+						</div>
+					{% endif %}
+					{% if block.type == 'rating' %}
+            {%- if product.metafields.reviews.rating.value != blank -%}
+              {% liquid
+							 assign rating = product.metafields.reviews.rating.value.rating | divided_by: product.metafields.reviews.rating.value.scale_max | times: 100 | append: '%'
+              %}
+							<div class="star-rating-container" {{ block.shopify_attributes }}>
+	              <div class="star-rating" role="img">
+	                <span aria-hidden="true" style="width: {{ rating | escape }};"></span>
+	              </div>
+								<p class="rating-count">
+									{{ 'products.product.reviews' | t: count: product.metafields.reviews.rating_count }}
+	              </p>
+							</div>
+            {%- endif -%}
+          {%- endif -%}
+					{% if block.type == 'description' %}
+		      	 <div class="product-short-description rte" {{ block.shopify_attributes }}>{{ product.description }}</div>
+					{% endif %}
+					{% if block.type == 'variant_picker' %}
+						<div {{ block.shopify_attributes }}>
+		      		{% render 'product-variant-picker', product: product, color_picker: block.settings.color_picker %}
+						</div>
+					{% endif %}
+					{% if block.type == 'buy_buttons' %}
+						<div {{ block.shopify_attributes }}>
+			      	 {% render 'product-add-to-cart', product: product, color_picker: block.settings.color_picker, form: form, show_dynamic_checkout: block.settings.show_dynamic_checkout, show_quantity_selector: block.settings.show_quantity_selector %}
+							{{ form | payment_terms }}
+						</div>
+					{% endif %}
+					{% if block.type == 'share' %}
+		      	 {% render 'social-share', share_title: product.title, share_permalink: product.url, share_image: product.featured_image %}
+					{% endif %}
+					{% if block.type == 'meta' %}
+						 {% render 'product-meta', product: product, product_meta_collections: block.settings.product_meta_collections, product_meta_tags: block.settings.product_meta_tags, product_meta_vendors: block.settings.product_meta_vendors %}
+					{% endif %}
+					{% if block.type == 'custom_liquid' %}
+          	{{ block.settings.custom_liquid }}
+					{% endif %}
+				{% endfor %}
+			{% endform %}
+    </div>
+  </div>
+	{% when 'style2' %}
+  <div class="row align-center">
+		<div class="small-12 large-6 columns">
+      <figure id="product-images" class="product-images" data-image-feature="{{ section.settings.product_image_feature | escape }}">
+				{%- for media in product.media -%}
+					<div
+						data-full="{{ media.src | image_url }}"
+						class="product-image"
+					>
+						{%- case media.media_type -%}
+							{% when 'image' %}
+								<div class="product-single__media product-single__media-image">
+									{%- if section.settings.product_image_feature == 'lightbox' -%}
+										<a href="{{ media.src | image_url }}">
+									{%- elsif section.settings.product_image_feature == 'zoom' -%}
+										<div class="zoom" data-full="{{ media.src | image_url }}">
+									{%- endif -%}
+										{%- render 'responsive-image', image: media.preview_image, sizes: '320x0,640x0,960x0' -%}
+									{%- if section.settings.product_image_feature == 'lightbox' -%}
+										</a>
+									{%- elsif section.settings.product_image_feature == 'zoom' -%}
+										</div>
+									{%- endif -%}
+								</div>
+							{% when 'external_video' %}
+								<div class="product-single__media product-single__media-external-video" data-provider="{{ media.host }}"  style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%;" data-media-id="{{ media.id }}">
+									{{ media | external_video_tag: loading: "lazy", loop: "0", muted: "1" }}
+								</div>
+							{% when 'video' %}
+								<div class="product-single__media product-single__media-native-video" style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%;" data-media-id="{{ media.id }}">
+									{{ media | video_tag: controls: true, loading: "lazy" }}
+								</div>
+							{% when 'model' %}
+							<div class="product-single__media product-single__media-model" style="padding-top: 100%" data-media-id="{{ media.id }}">
+								{{ media | model_viewer_tag }}
+							</div>
+						{% endcase %}
+					</div>
+				{%- endfor -%}
+      </figure>
+    </div>
+    <div class="small-12 large-6 columns product-information">
+      <div class="summary entry-summary">
+				{% form 'product', product %}
+				{% for block in section.blocks %}
+					{%- if block.type == '@app' -%}
+						{% render block %}
+					{% endif %}
+					{% if block.type == 'breadcrumbs' %}
+						{% render 'breadcrumbs' %}
+					{% endif %}
+					{% if block.type == 'title' %}
+						<h1 class="product_title uppercase-{{ block.settings.uppercase }}" {{ block.shopify_attributes }}>{{ product.title }}</h1>
+					{% endif %}
+					{% if block.type == 'price' %}
+						<div class="product-price-container" {{ block.shopify_attributes }}>
+							{% render 'product-price', product: product %}
+							{%- if section.settings.show_taxes_included != blank -%}
+								{%- if cart.taxes_included or shop.shipping_policy.body != blank -%}
+									<div class="product__tax caption">
+										{%- if cart.taxes_included -%}
+											{{ 'products.product.include_taxes' | t }}
+										{%- endif -%}
+										{%- if shop.shipping_policy.body != blank -%}
+											{{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
+										{%- endif -%}
+									</div>
+								{%- endif -%}
+							{%- endif -%}
+						</div>
+					{% endif %}
+					{% if block.type == 'rating' %}
+						{%- if product.metafields.reviews.rating.value != blank -%}
+							{% liquid
+							 assign rating = product.metafields.reviews.rating.value.rating | divided_by: product.metafields.reviews.rating.value.scale_max | times: 100 | append: '%'
+							%}
+							<div class="star-rating-container" {{ block.shopify_attributes }}>
+								<div class="star-rating" role="img">
+									<span aria-hidden="true" style="width: {{ rating | escape }};"></span>
+								</div>
+								<p class="rating-count">
+									{{ 'products.product.reviews' | t: count: product.metafields.reviews.rating_count }}
+								</p>
+							</div>
+						{%- endif -%}
+					{%- endif -%}
+					{% if block.type == 'description' %}
+						 <div class="product-short-description rte" {{ block.shopify_attributes }}>{{ product.description }}</div>
+					{% endif %}
+					{% if block.type == 'variant_picker' %}
+						<div {{ block.shopify_attributes }}>
+		      		{% render 'product-variant-picker', product: product, color_picker: block.settings.color_picker %}
+						</div>
+					{% endif %}
+					{% if block.type == 'buy_buttons' %}
+						<div {{ block.shopify_attributes }}>
+			      	 {% render 'product-add-to-cart', product: product, color_picker: block.settings.color_picker, form: form, show_dynamic_checkout: block.settings.show_dynamic_checkout, show_quantity_selector: block.settings.show_quantity_selector %}
+							{{ form | payment_terms }}
+						</div>
+					{% endif %}
+					{% if block.type == 'share' %}
+						 {% render 'social-share', share_title: product.title, share_permalink: product.url, share_image: product.featured_image %}
+					{% endif %}
+					{% if block.type == 'meta' %}
+						 {% render 'product-meta', product: product, product_meta_collections: block.settings.product_meta_collections, product_meta_tags: block.settings.product_meta_tags, product_meta_vendors: block.settings.product_meta_vendors %}
+					{% endif %}
+					{% if block.type == 'custom_liquid' %}
+						{{ block.settings.custom_liquid }}
+					{% endif %}
+				{% endfor %}
+				{% endform %}
+      </div>
+    </div>
+  </div>
+	{% when 'style4' %}
+  <div class="row align-center">
+		<div class="small-12 large-7 columns">
+      <figure id="product-images" class="product-images" data-image-feature="{{ section.settings.product_image_feature | escape }}">
+				{%- for media in product.media -%}
+					<div
+						data-full="{{ media.src | image_url }}"
+						class="product-image"
+					>
+						{%- case media.media_type -%}
+							{% when 'image' %}
+								<div class="product-single__media product-single__media-image">
+									{%- if section.settings.product_image_feature == 'lightbox' -%}
+										<a href="{{ media.src | image_url }}">
+									{%- elsif section.settings.product_image_feature == 'zoom' -%}
+										<div class="zoom" data-full="{{ media.src | image_url }}">
+									{%- endif -%}
+										{%- render 'responsive-image', image: media.preview_image, sizes: '320x0,640x0,960x0' -%}
+									{%- if section.settings.product_image_feature == 'lightbox' -%}
+										</a>
+									{%- elsif section.settings.product_image_feature == 'zoom' -%}
+										</div>
+									{%- endif -%}
+								</div>
+							{% when 'external_video' %}
+								<div class="product-single__media product-single__media-external-video" data-provider="{{ media.host }}"  style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%;" data-media-id="{{ media.id }}">
+									{{ media | external_video_tag: loading: "lazy" }}
+								</div>
+							{% when 'video' %}
+								<div class="product-single__media product-single__media-native-video" style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%;" data-media-id="{{ media.id }}">
+									{{ media | video_tag: controls: true, loading: "lazy" }}
+								</div>
+							{% when 'model' %}
+							<div class="product-single__media product-single__media-model" style="padding-top: 100%" data-media-id="{{ media.id }}">
+								{{ media | model_viewer_tag }}
+							</div>
+						{% endcase %}
+					</div>
+				{%- endfor -%}
+      </figure>
+    </div>
+    <div class="small-12 large-5 columns product-information">
+      <div class="summary entry-summary">
+				{% form 'product', product %}
+					{% for block in section.blocks %}
+						{%- if block.type == '@app' -%}
+							{% render block %}
+						{% endif %}
+						{% if block.type == 'breadcrumbs' %}
+							{% render 'breadcrumbs' %}
+						{% endif %}
+						{% if block.type == 'title' %}
+							<h1 class="product_title uppercase-{{ block.settings.uppercase }}" {{ block.shopify_attributes }}>{{ product.title }}</h1>
+						{% endif %}
+						{% if block.type == 'price' %}
+							<div class="product-price-container" {{ block.shopify_attributes }}>
+								{% render 'product-price', product: product %}
+								{%- if section.settings.show_taxes_included != blank -%}
+									{%- if cart.taxes_included or shop.shipping_policy.body != blank -%}
+										<div class="product__tax caption">
+											{%- if cart.taxes_included -%}
+												{{ 'products.product.include_taxes' | t }}
+											{%- endif -%}
+											{%- if shop.shipping_policy.body != blank -%}
+												{{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
+											{%- endif -%}
+										</div>
+									{%- endif -%}
+								{%- endif -%}
+							</div>
+						{% endif %}
+						{% if block.type == 'rating' %}
+							{%- if product.metafields.reviews.rating.value != blank -%}
+								{% liquid
+								 assign rating = product.metafields.reviews.rating.value.rating | divided_by: product.metafields.reviews.rating.value.scale_max | times: 100 | append: '%'
+								%}
+								<div class="star-rating-container" {{ block.shopify_attributes }}>
+									<div class="star-rating" role="img">
+										<span aria-hidden="true" style="width: {{ rating | escape }};"></span>
+									</div>
+									<p class="rating-count">
+										{{ 'products.product.reviews' | t: count: product.metafields.reviews.rating_count }}
+									</p>
+								</div>
+							{%- endif -%}
+						{%- endif -%}
+						{% if block.type == 'description' %}
+							 <div class="product-short-description rte" {{ block.shopify_attributes }}>{{ product.description }}</div>
+						{% endif %}
+						{% if block.type == 'variant_picker' %}
+							<div {{ block.shopify_attributes }}>
+			      		{% render 'product-variant-picker', product: product, color_picker: block.settings.color_picker %}
+							</div>
+						{% endif %}
+						{% if block.type == 'buy_buttons' %}
+							<div {{ block.shopify_attributes }}>
+				      	 {% render 'product-add-to-cart', product: product, color_picker: block.settings.color_picker, form: form, show_dynamic_checkout: block.settings.show_dynamic_checkout, show_quantity_selector: block.settings.show_quantity_selector %}
+								{{ form | payment_terms }}
+							</div>
+						{% endif %}
+						{% if block.type == 'share' %}
+							 {% render 'social-share', share_title: product.title, share_permalink: product.url, share_image: product.featured_image %}
+						{% endif %}
+						{% if block.type == 'meta' %}
+							 {% render 'product-meta', product: product, product_meta_collections: block.settings.product_meta_collections, product_meta_tags: block.settings.product_meta_tags, product_meta_vendors: block.settings.product_meta_vendors %}
+						{% endif %}
+						{% if block.type == 'custom_liquid' %}
+							{{ block.settings.custom_liquid }}
+						{% endif %}
+					{% endfor %}
+				{% endform %}
+      </div>
+    </div>
+  </div>
+	{% when 'style5' %}
+  <div class="row align-center">
+		<div class="small-12 large-7 columns">
+      <figure id="product-images" class="product-images" data-image-feature="{{ section.settings.product_image_feature | escape }}">
+				{%- for media in product.media -%}
+					<div
+						data-full="{{ media.src | image_url }}"
+						class="product-image"
+					>
+						{%- case media.media_type -%}
+							{% when 'image' %}
+								<div class="product-single__media product-single__media-image">
+									{%- if section.settings.product_image_feature == 'lightbox' -%}
+										<a href="{{ media.src | image_url }}">
+									{%- elsif section.settings.product_image_feature == 'zoom' -%}
+										<div class="zoom" data-full="{{ media.src | image_url }}">
+									{%- endif -%}
+										{%- render 'responsive-image', image: media.preview_image, sizes: '320x0,640x0,960x0' -%}
+									{%- if section.settings.product_image_feature == 'lightbox' -%}
+										</a>
+									{%- elsif section.settings.product_image_feature == 'zoom' -%}
+										</div>
+									{%- endif -%}
+								</div>
+							{% when 'external_video' %}
+								<div class="product-single__media product-single__media-external-video" data-provider="{{ media.host }}"  style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%;" data-media-id="{{ media.id }}">
+									{{ media | external_video_tag: loading: "lazy", loop: "0", muted: "1" }}
+								</div>
+							{% when 'video' %}
+								<div class="product-single__media product-single__media-native-video" style="padding-top: {{ 1 | divided_by: media.aspect_ratio | times: 100 }}%;" data-media-id="{{ media.id }}">
+									{{ media | video_tag: controls: true, loading: "lazy" }}
+								</div>
+							{% when 'model' %}
+							<div class="product-single__media product-single__media-model" style="padding-top: 100%" data-media-id="{{ media.id }}">
+								{{ media | model_viewer_tag }}
+							</div>
+						{% endcase %}
+					</div>
+				{%- endfor -%}
+      </figure>
+    </div>
+    <div class="small-12 large-5 columns product-information">
+      <div class="summary entry-summary">
+				{% form 'product', product %}
+					{% for block in section.blocks %}
+						{%- if block.type == '@app' -%}
+							{% render block %}
+						{% endif %}
+						{% if block.type == 'breadcrumbs' %}
+							{% render 'breadcrumbs' %}
+						{% endif %}
+						{% if block.type == 'title' %}
+							<h1 class="product_title uppercase-{{ block.settings.uppercase }}" {{ block.shopify_attributes }}>{{ product.title }}</h1>
+						{% endif %}
+						{% if block.type == 'price' %}
+							<div class="product-price-container" {{ block.shopify_attributes }}>
+								{% render 'product-price', product: product %}
+								{%- if section.settings.show_taxes_included != blank -%}
+									{%- if cart.taxes_included or shop.shipping_policy.body != blank -%}
+										<div class="product__tax caption">
+											{%- if cart.taxes_included -%}
+												{{ 'products.product.include_taxes' | t }}
+											{%- endif -%}
+											{%- if shop.shipping_policy.body != blank -%}
+												{{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
+											{%- endif -%}
+										</div>
+									{%- endif -%}
+								{%- endif -%}
+							</div>
+						{% endif %}
+						{% if block.type == 'rating' %}
+							{%- if product.metafields.reviews.rating.value != blank -%}
+								{% liquid
+								 assign rating = product.metafields.reviews.rating.value.rating | divided_by: product.metafields.reviews.rating.value.scale_max | times: 100 | append: '%'
+								%}
+								<div class="star-rating-container" {{ block.shopify_attributes }}>
+									<div class="star-rating" role="img">
+										<span aria-hidden="true" style="width: {{ rating | escape }};"></span>
+									</div>
+									<p class="rating-count">
+										{{ 'products.product.reviews' | t: count: product.metafields.reviews.rating_count }}
+									</p>
+								</div>
+							{%- endif -%}
+						{%- endif -%}
+						{% if block.type == 'description' %}
+							 <div class="product-short-description rte" {{ block.shopify_attributes }}>{{ product.description }}</div>
+						{% endif %}
+						{% if block.type == 'variant_picker' %}
+							<div {{ block.shopify_attributes }}>
+			      		{% render 'product-variant-picker', product: product, color_picker: block.settings.color_picker %}
+							</div>
+						{% endif %}
+						{% if block.type == 'buy_buttons' %}
+							<div {{ block.shopify_attributes }}>
+				      	 {% render 'product-add-to-cart', product: product, color_picker: block.settings.color_picker, form: form, show_dynamic_checkout: block.settings.show_dynamic_checkout, show_quantity_selector: block.settings.show_quantity_selector %}
+								{{ form | payment_terms }}
+							</div>
+						{% endif %}
+						{% if block.type == 'share' %}
+							 {% render 'social-share', share_title: product.title, share_permalink: product.url, share_image: product.featured_image %}
+						{% endif %}
+						{% if block.type == 'meta' %}
+							 {% render 'product-meta', product: product, product_meta_collections: block.settings.product_meta_collections, product_meta_tags: block.settings.product_meta_tags, product_meta_vendors: block.settings.product_meta_vendors %}
+						{% endif %}
+						{% if block.type == 'custom_liquid' %}
+							{{ block.settings.custom_liquid }}
+						{% endif %}
+					{% endfor %}
+				{% endform %}
+      </div>
+    </div>
+  </div>
+{% endcase %}
+</div>
+{%- assign pick_up_availabilities = product.selected_or_first_available_variant.store_availabilities | where: 'pick_up_enabled', true -%}
+{%- if pick_up_availabilities.size > 0 -%}
+	<aside id="side-availability" class="side-panel side-availability">
+		<header>
+			<h6>{{ 'pickup_availability.pickup_availability' | t }}</h6>
+			<a href="#" class="thb-close" title="Close">{% render 'svg-icons' with 'thb-close' %}</a>
+		</header>
+		<div class="side-panel-content">
+			<h2 class="side-availability-product">{{ product.selected_or_first_available_variant.product.title | escape }}</h2>
+			<ul class="pickup-availabilities-list" role="list">
+				{%- for availability in pick_up_availabilities -%}
+					<li class="pickup-availability-list__item">
+						<h3 class="pickup-availability-list__location">
+							{{ availability.location.name }}
+						</h3>
+						<div class="pickup-availability-list__stock pickup-availability-small-text">
+							{%- if availability.available -%}
+								{% render 'svg-icons' with 'thb-availability-check' %} {{ 'pickup_availability.pick_up_available' | t }}, {{ availability.pick_up_time | downcase }}
+							{%- else -%}
+								{% render 'svg-icons' with 'thb-availability-cross' %} {{ 'pickup_availability.pick_up_unavailable_at_html' | t: location_name: availability.location.name }}
+							{%- endif -%}
+						</div>
+						{%- assign address = availability.location.address -%}
+						<address class="pickup-availability-list__address">
+							{{ address | format_address }}
+						</address>
+						{%- if address.phone.size > 0 -%}
+							<p class="pickup-availability-list__phone pickup-availability-small-text">
+								{{ address.phone }}<br>
+							</p>
+						{%- endif -%}
+					</li>
+				{%- endfor -%}
+			</ul>
+		</div>
+	</aside>
+{% endif %}
+
+{% if first_3d_model %}
+	<script type="application/json" id="ProductJSON-{{ product.id }}">
+		{{ product.media | where: 'media_type', 'model' | json }}
+	</script>
+{% endif %}
+
+{%- liquid
+  if product.selected_or_first_available_variant.featured_media
+    assign seo_media = product.selected_or_first_available_variant.featured_media
+  else
+    assign seo_media = product.featured_media
+  endif
+-%}
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org/",
+    "@type": "Product",
+    "name": {{ product.title | json }},
+    "url": {{ shop.url | append: product.url | json }},
+    {% if seo_media -%}
+      {%- assign media_size = seo_media.preview_image.width | append: 'x' -%}
+      "image": [
+        {{ seo_media | img_url: media_size | prepend: "https:" | json }}
+      ],
+    {%- endif %}
+    "description": {{ product.description | strip_html | json }},
+    {% if product.selected_or_first_available_variant.sku != blank -%}
+      "sku": {{ product.selected_or_first_available_variant.sku | json }},
+    {%- endif %}
+    "brand": {
+      "@type": "Thing",
+      "name": {{ product.vendor | json }}
+    },
+    "offers": [
+      {%- for variant in product.variants -%}
+        {
+          "@type" : "Offer",
+          {%- if variant.sku != blank -%}
+            "sku": {{ variant.sku | json }},
+          {%- endif -%}
+          "availability" : "http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
+          "price" : {{ variant.price | divided_by: 100.00 | json }},
+          "priceCurrency" : {{ cart.currency.iso_code | json }},
+          "url" : {{ shop.url | append: variant.url | json }}
+        }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  }
+</script>
+{% schema %}
+	{
+	  "name": "Product information",
+	  "tag": "section",
+	  "class": "product-section",
+		"settings": [
+			{
+         "type": "select",
+         "id": "product_style",
+         "label": "Media layout",
+         "options": [
+           { "value": "style1", "label": "Slideshow" },
+           { "value": "style2", "label": "Stacked large images" },
+           { "value": "style4", "label": "Stacked small images" },
+           { "value": "style5", "label": "Stacked full width" }
+         ],
+         "default":   "style1"
+      },
+      {
+         "type": "select",
+         "id": "product_image_feature",
+         "label": "Image zoom",
+         "options": [
+           { "value": "", "label": "None" },
+           { "value": "lightbox", "label": "Lightbox" },
+           { "value": "zoom", "label": "Zoom" }
+         ],
+         "default": ""
+      },
+			{
+				"type": "checkbox",
+				"id": "show_taxes_included",
+				"default": true,
+				"label": "Show tax and shipping information",
+				"info": "Tax and shipping information will be displayed if [taxes are included in the price](https://help.shopify.com/en/manual/taxes/location#include-taxes-in-product-prices) or [shipping policy](https://help.shopify.com/en/manual/checkout-settings/refund-privacy-tos#add-or-generate-store-policies) is added"
+			},
+			{
+			 "type": "header",
+			 "content": "Spacing"
+		 	},
+		 	{
+			 "type": "checkbox",
+			 "id": "disable_bottom_spacing",
+			 "default": false,
+			 "label": "Remove bottom spacing"
+		 	}
+    ],
+	  "blocks": [
+			{
+				"type": "@app"
+			},
+			{
+	      "type": "breadcrumbs",
+	      "name": "Breadcrumbs",
+	      "limit": 1
+	    },
+	    {
+	      "type": "title",
+	      "name": "Title",
+	      "limit": 1,
+				"settings": [
+					{
+			      "type": "checkbox",
+			      "id": "uppercase",
+			      "default": true,
+			      "label": "Uppercase"
+			    }
+				]
+	    },
+	    {
+	      "type": "price",
+	      "name": "Price",
+	      "limit": 1
+	    },
+			{
+	      "type": "rating",
+	      "name": "Rating",
+	      "limit": 1,
+				"settings": [
+					{
+						"type": "paragraph",
+						"content": "To display a rating, add a product rating app. [Learn more](https://help.shopify.com/manual/online-store/themes/os20/themes-by-shopify/dawn/sections#featured-collection-show-product-rating)"
+					}
+				]
+	    },
+			{
+	      "type": "variant_picker",
+	      "name": "Variant picker",
+	      "limit": 1,
+				"settings": [
+					{
+						"type": "checkbox",
+						"id": "color_picker",
+						"default": true,
+						"label": "Enable color swatches",
+						"info": "[Learn more about color swatches.](https://documentation.fuelthemes.net/kb/how-do-i-set-up-product-variant-swatches/)"
+					}
+				]
+	    },
+	    {
+	      "type": "buy_buttons",
+	      "name": "Product form",
+	      "limit": 1,
+				"settings": [
+
+					{
+						"type": "checkbox",
+						"id": "show_quantity_selector",
+						"default": true,
+						"label": "Show quantity selector"
+					},
+	        {
+	          "type": "checkbox",
+	          "id": "show_dynamic_checkout",
+	          "default": true,
+	          "label": "Show dynamic checkout buttons",
+	          "info": "Using the payment methods available on your store, customers see their preferred option, like PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)"
+	        }
+	      ]
+	    },
+	    {
+	      "type": "description",
+	      "name": "Description",
+	      "limit": 1
+	    },
+	    {
+	      "type": "share",
+	      "name": "Share",
+	      "limit": 1,
+				"settings": [
+					{
+						"type": "paragraph",
+						"content": "If you include a link in social media posts, the page’s featured image will be shown as the preview image. [Learn more](https://help.shopify.com/en/manual/online-store/images/showing-social-media-thumbnail-images)."
+					},
+					{
+						"type": "paragraph",
+						"content": "A store title and description are included with the preview image. [Learn more](https://help.shopify.com/en/manual/promoting-marketing/seo/adding-keywords#set-a-title-and-description-for-your-online-store)."
+					}
+				]
+	    },
+	    {
+	      "type": "meta",
+	      "name": "Vendor and collection",
+	      "limit": 1,
+				"settings": [
+					{
+		        "type": "checkbox",
+		        "id": "product_meta_collections",
+		        "label": "Show collections",
+		        "default": true
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "product_meta_tags",
+		        "label": "Show tags",
+		        "default": false
+		      },
+		      {
+		        "type": "checkbox",
+		        "id": "product_meta_vendors",
+		        "label": "Show vendors",
+		        "default": true
+		      }
+				]
+	    },
+			{
+	      "type": "custom_liquid",
+	      "name": "Custom liquid",
+	      "settings": [
+	        {
+	          "type": "liquid",
+	          "id": "custom_liquid",
+	          "label": "Custom liquid",
+	          "info": "Add app snippets or other Liquid code to create advanced customizations."
+	        }
+	      ]
+	    }
+	  ]
+	}
+{% endschema %}

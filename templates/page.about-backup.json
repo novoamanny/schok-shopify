@@ -1,0 +1,164 @@
+{
+  "sections": {
+    "image-with-text": {
+      "type": "image-with-text",
+      "blocks": {
+        "ee339c32-6e0a-44e8-a7d8-88206d4b4271": {
+          "type": "title",
+          "settings": {
+            "title": "Heading",
+            "heading_size": "h2",
+            "color": "#151515",
+            "animation": ""
+          }
+        },
+        "69a3a557-6adb-4ac8-8e63-2d35036bebba": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "color": "#444444",
+            "animation": "animation right-to-left"
+          }
+        },
+        "a85d4377-0191-40b1-b00e-426c37241250": {
+          "type": "mini-text",
+          "settings": {
+            "text": "<p>Add your store address or<br\/>your store hours<\/p>",
+            "color": "#444444",
+            "animation": "animation fade-in"
+          }
+        }
+      },
+      "block_order": [
+        "ee339c32-6e0a-44e8-a7d8-88206d4b4271",
+        "69a3a557-6adb-4ac8-8e63-2d35036bebba",
+        "a85d4377-0191-40b1-b00e-426c37241250"
+      ],
+      "settings": {
+        "height": "adapt",
+        "full_width": true,
+        "direction": "image-left",
+        "text_alignment": "text-left",
+        "bg_color": "rgba(0,0,0,0)",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "page": {
+      "type": "page",
+      "settings": {
+        "page": "about",
+        "show_page_title": false,
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": false
+      }
+    },
+    "image-with-text-overlay": {
+      "type": "image-with-text-overlay",
+      "settings": {
+        "parallax": true,
+        "desktop_height": "desktop-height-550",
+        "mobile_height": "mobile-height-400",
+        "vertical_alignment": "content-middle",
+        "text_alignment": "center",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": true
+      }
+    },
+    "stores": {
+      "type": "store-list",
+      "blocks": {
+        "store1": {
+          "type": "store",
+          "settings": {
+            "title": "Store location",
+            "address": "<p>Add your store address or<br\/>your store hours<\/p>",
+            "button-text": "Get Directions",
+            "button-link": "http:\/\/maps.google.com"
+          }
+        },
+        "store2": {
+          "type": "store",
+          "settings": {
+            "title": "Store location",
+            "address": "<p>Add your store address or<br\/>your store hours<\/p>",
+            "button-text": "Get Directions",
+            "button-link": "http:\/\/maps.google.com"
+          }
+        },
+        "store3": {
+          "type": "store",
+          "settings": {
+            "title": "Store location",
+            "address": "<p>Add your store address or<br\/>your store hours<\/p>",
+            "button-text": "Get Directions",
+            "button-link": "http:\/\/maps.google.com"
+          }
+        }
+      },
+      "block_order": [
+        "store1",
+        "store2",
+        "store3"
+      ],
+      "settings": {
+        "title": "Our Stores",
+        "animation": "animation right-to-left",
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": true
+      }
+    },
+    "multicolumn": {
+      "type": "multicolumn",
+      "blocks": {
+        "block1": {
+          "type": "block",
+          "settings": {
+            "title": "Heading",
+            "text": "<p>Focus on your upcoming sales. Add details on availability, style, or even provide a review.<\/p>",
+            "text_alignment": "text-center",
+            "button-text": "Shop Now",
+            "button-link": "shopify:\/\/collections\/all",
+            "animation": "animation left-to-right",
+            "heading_color": "#151515",
+            "text_color": "#444444",
+            "bg_color": "#f5f5f5"
+          }
+        },
+        "block2": {
+          "type": "block",
+          "settings": {
+            "title": "Heading",
+            "text": "<p>Focus on your upcoming sales. Add details on availability, style, or even provide a review.<\/p>",
+            "text_alignment": "text-center",
+            "button-text": "Say Hello",
+            "button-link": "shopify:\/\/pages\/contact",
+            "animation": "animation right-to-left",
+            "heading_color": "#ffffff",
+            "text_color": "#efefef",
+            "bg_color": "#878787"
+          }
+        }
+      },
+      "block_order": [
+        "block1",
+        "block2"
+      ],
+      "settings": {
+        "full_width": false,
+        "padding": "low-padding",
+        "disable_top_spacing": false,
+        "disable_bottom_spacing": false
+      }
+    }
+  },
+  "order": [
+    "image-with-text",
+    "page",
+    "image-with-text-overlay",
+    "stores",
+    "multicolumn"
+  ]
+}

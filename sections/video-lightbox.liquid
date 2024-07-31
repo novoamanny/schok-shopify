@@ -1,0 +1,102 @@
+<div class="section-image-video-lightbox {% if section.settings.parallax %}thb-parallax{% endif %} section-margin{% if section.settings.disable_top_spacing %} section-no-top-margin{% endif %}{% if section.settings.disable_bottom_spacing %} section-no-bottom-margin{% endif %}" id="section-image-video-lightbox-{{ section.id }}">
+	{{ 'video-lightbox.css' | asset_url | stylesheet_tag }}
+	{% if section.settings.bg_image %}
+		<img data-src="{{ section.settings.bg_image | image_url }}" alt="{{ section.settings.bg_image.alt | escape }}" width="{{ section.settings.bg_image.width | escape }}" height="{{ section.settings.bg_image.height }}" class="thb-parallax-image lazyload">
+		<noscript>
+		<img src="{{ section.settings.bg_image | image_url }}" alt="{{ section.settings.bg_image.alt | escape }}" width="{{ section.settings.bg_image.width }}" height="{{ section.settings.bg_image.height }}" class="thb-parallax-image" />
+		</noscript>
+	{% elsif section.settings.video_url and section.settings.video_url.preview_image %}
+		{% assign video_image = section.settings.video_url.preview_image %}
+		<img data-src="{{ video_image | image_url }}" alt="{{ video_image.alt | escape }}" width="{{ video_image.width | escape }}" height="{{ video_image.height }}" class="thb-parallax-image lazyload">
+		<noscript>
+		<img src="{{ video_image | image_url }}" alt="{{ video_image.alt | escape }}" width="{{ video_image.width }}" height="{{ video_image.height }}" class="thb-parallax-image" />
+		</noscript>
+	{% else %}
+		{{ 'lifestyle-1' | placeholder_svg_tag: 'thb-parallax-image placeholder_svg_tag' }}
+	{% endif %}
+	<div class="row">
+		<div class="small-12 columns thb-light-column">
+			<div class="blog-post-wrapper text-center">
+				{% if section.settings.subtitle %}
+				<p class="h6 animation fade-in">{{ section.settings.subtitle }}</p>
+				{% endif %}
+				{% if section.settings.title %}
+				<p class="h2 animation fade-in">{{ section.settings.title }}</p>
+				{% endif %}
+				{% if blank != section.settings.video_url %}
+				<div class="animation fade-in">
+					<a href="{{ section.settings.video_url | escape }}" title="{{ section.settings.title | escape }}" class="mfp-video video-play-icon">
+						{% render 'svg-icons' with 'thb-play' %}
+					</a>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+
+{% schema %}
+  {
+    "name": "Video lightbox",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "bg_image",
+        "label": "Background image",
+				"info": "1920 x 1080 px .jpg recommended."
+      },
+			{
+        "type": "checkbox",
+        "id": "parallax",
+        "default": true,
+        "label": "Enable parallax"
+      },
+			{
+        "type": "text",
+        "id": "subtitle",
+        "label": "Subheading",
+        "default": "Subheading"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Heading"
+      },
+      {
+				"type": "video_url",
+        "id": "video_url",
+        "label": "Video URL",
+				"accept": [
+          "youtube",
+          "vimeo"
+        ],
+				"placeholder": "Use a YouTube or Vimeo URL",
+				"default": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
+				"info": "Video plays in a lightbox."
+      },
+			{
+        "type": "header",
+        "content": "Spacing"
+      },
+			{
+				"type": "checkbox",
+				"id": "disable_top_spacing",
+				"default": true,
+				"label": "Remove top spacing"
+			},
+			{
+				"type": "checkbox",
+				"id": "disable_bottom_spacing",
+				"default": true,
+				"label": "Remove bottom spacing"
+			}
+    ],
+    "presets": [
+      {
+        "name": "Video lightbox"
+      }
+    ]
+  }
+
+{% endschema %}

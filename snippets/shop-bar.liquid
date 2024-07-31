@@ -1,0 +1,40 @@
+{% liquid
+	if template == 'search'
+		assign total_count = collection.results_count
+	elsif template == 'collection'
+		assign total_count = collection.products_count
+	endif 
+%}
+<div class="shop_bar">
+  <div class="row">
+    <div class="small-5 medium-4 columns category_bar">
+			{% if filtering %}
+      <a href="#side-filters" id="thb-shop-filters">
+        {% render 'svg-icons' with 'thb-filter' %}
+        {{ 'general.collection.filter' | t }}
+      </a>
+			{% endif %}
+    </div>
+    <div class="small-7 medium-8 columns ordering">
+			{%- if total_count > 0 -%}
+      {% assign pagination_start = paginate.current_page | minus: 1 | times: paginate.page_size | plus: 1 %}
+      {% assign pagination_end = paginate.current_page | times: paginate.page_size %}
+      <p id="result-count" class="north-result-count">{{ 'general.collection.showing' | t }} {{ pagination_start }} - {{ pagination_end | at_most: total_count }} {{ 'general.collection.of' | t }} {{ total_count }} {{ 'general.collection.results' | t }}</p>
+			{%- endif -%}
+			{% if sorting %}
+      <div class="north-ordering" method="get">
+				<div class="select">
+	        <select id="sort_by" name="sort_by" class="orderby" form="FacetFiltersForm">
+	          {% for option in collection.sort_options %}
+	            <option value="{{ option.value }}" {% if option.value == collection.sort_by %}selected{% endif %} >{{ option.name }}</option>
+	          {% endfor %}
+	        </select>
+				</div>
+				<noscript>
+          <button type="submit" class="button" form="FacetFiltersForm">{{ 'general.collection.sort' | t }}</button>
+        </noscript>
+	    </div>
+			{% endif %}
+    </div>
+  </div>
+</div>

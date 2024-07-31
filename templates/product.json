@@ -1,0 +1,85 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "8a82546d-51ba-42f6-b7e6-7fa73fcde938": {
+          "type": "breadcrumbs",
+          "settings": {}
+        },
+        "7a9e8be1-39f0-4a96-a5e1-73e5fb457704": {
+          "type": "title",
+          "settings": {
+            "uppercase": true
+          }
+        },
+        "9050c7cb-7566-44de-b9d3-c89d6570e376": {
+          "type": "price",
+          "settings": {}
+        },
+        "2fe6b648-9e4b-4d8b-b969-3e2cad9e14eb": {
+          "type": "rating",
+          "settings": {}
+        },
+        "f5f84edf-4b73-4785-a2c6-4f1861907b9d": {
+          "type": "description",
+          "settings": {}
+        },
+        "7462a6a5-d06d-4b93-8c5c-4cc6f3a1349b": {
+          "type": "variant_picker",
+          "settings": {
+            "color_picker": true
+          }
+        },
+        "3184ed78-b74d-40cc-a072-56e6212c92ea": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_quantity_selector": true,
+            "show_dynamic_checkout": true
+          }
+        },
+        "9b21cdba-0aa2-4add-9bc9-4525d8e51b61": {
+          "type": "meta",
+          "settings": {
+            "product_meta_collections": true,
+            "product_meta_tags": false,
+            "product_meta_vendors": true
+          }
+        },
+        "03c4d510-b1c0-4245-abfe-20674cf3b97a": {
+          "type": "share",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "8a82546d-51ba-42f6-b7e6-7fa73fcde938",
+        "7a9e8be1-39f0-4a96-a5e1-73e5fb457704",
+        "9050c7cb-7566-44de-b9d3-c89d6570e376",
+        "2fe6b648-9e4b-4d8b-b969-3e2cad9e14eb",
+        "f5f84edf-4b73-4785-a2c6-4f1861907b9d",
+        "7462a6a5-d06d-4b93-8c5c-4cc6f3a1349b",
+        "3184ed78-b74d-40cc-a072-56e6212c92ea",
+        "9b21cdba-0aa2-4add-9bc9-4525d8e51b61",
+        "03c4d510-b1c0-4245-abfe-20674cf3b97a"
+      ],
+      "settings": {
+        "product_style": "style1",
+        "product_image_feature": "lightbox",
+        "show_taxes_included": true,
+        "disable_bottom_spacing": false
+      }
+    },
+    "recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "heading": "You may also like",
+        "disable_top_spacing": true,
+        "disable_bottom_spacing": false
+      }
+    }
+  },
+  "order": [
+    "main",
+    "recommendations"
+  ]
+}

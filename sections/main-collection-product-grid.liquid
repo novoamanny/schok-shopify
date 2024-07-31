@@ -1,0 +1,147 @@
+{% assign collection_pagination_count = section.settings.collection_product_count | plus: 0 %}
+{% assign grid_size = section.settings.collection_grid_num %}
+{% assign collection_layout = section.settings.collection_layout %}
+{% paginate collection.products by collection_pagination_count %}
+  {% render 'shop-bar', paginate: paginate, filtering: section.settings.enable_filtering, sorting: section.settings.enable_sorting %}
+	<div class="row">
+    <div class="small-12 columns">
+		  {% if collection.products.size > 0 %}
+		    <div id="main-collection-products" data-id="{{ section.id }}" class="products row">
+		      {% for product in collection.products %}
+						{% case collection_layout %}
+							{% assign grid_item_width = '' %}
+							{% when 'style1' %}
+							  {% case grid_size %}
+							    {% when 1 %}
+							      {% assign grid_item_width = 'small-12' %}
+							    {% when 2 %}
+							      {% assign grid_item_width = 'small-6' %}
+							    {% when 3 %}
+							      {% assign grid_item_width = 'small-6 medium-4' %}
+							    {% when 4 %}
+							      {% assign grid_item_width = 'small-6 medium-3' %}
+							    {% when 5 %}
+							      {% assign grid_item_width = 'small-6 medium-1/5' %}
+							    {% when 6 %}
+							      {% assign grid_item_width = 'small-6 medium-4 large-2' %}
+							    {% else %}
+							      {% assign grid_item_width = 'small-6 medium-4' %}
+							  {% endcase %}
+							{% when 'style2' %}
+							  {% assign class_1 = 'small-6 medium-4' %}
+							  {% assign class_2 = 'small-6 medium-3' %}
+							  {% capture grid_item_width %}
+							    {% cycle class_1, class_1, class_1, class_2, class_2, class_2, class_2 %}
+							  {% endcapture %}
+							{% when 'style3' %}
+							  {% assign class_1 = 'small-6 medium-3' %}
+							  {% assign class_2 = 'small-6 medium-1/5' %}
+							  {% capture grid_item_width %}
+							    {% cycle class_1, class_1, class_1, class_1, class_2, class_2, class_2, class_2, class_2 %}
+							  {% endcapture %}
+							{% when 'style4' %}
+							  {% assign class_1 = 'small-6 medium-1/5' %}
+							  {% assign class_2 = 'small-6 medium-2' %}
+							  {% capture grid_item_width %}
+							    {% cycle class_1, class_1, class_1, class_1, class_1, class_2, class_2, class_2, class_2, class_2, class_2 %}
+							  {% endcapture %}
+							{% when 'style5' %}
+							  {% assign class_1 = 'small-6 medium-3' %}
+							  {% assign class_2 = 'small-6 medium-4' %}
+							  {% capture grid_item_width %}
+							    {% cycle class_1, class_1, class_1, class_1, class_2, class_2, class_2 %}
+							  {% endcapture %}
+							{% when 'style6' %}
+							  {% assign class_1 = 'small-6 medium-1/5' %}
+							  {% assign class_2 = 'small-6 medium-3' %}
+							  {% capture grid_item_width %}
+							    {% cycle class_1, class_1, class_1, class_1, class_1, class_2, class_2, class_2, class_2 %}
+							  {% endcapture %}
+							{% when 'style7' %}
+							  {% assign class_1 = 'small-6 medium-2' %}
+							  {% assign class_2 = 'small-6 medium-1/5' %}
+							  {% capture grid_item_width %}
+							    {% cycle class_1, class_1, class_1, class_1, class_1, class_1, class_2, class_2, class_2, class_2, class_2 %}
+							  {% endcapture %}
+							{% when 'style8' %}
+							  {% assign class_1 = 'small-6 medium-3' %}
+							  {% assign class_2 = 'small-6 medium-4' %}
+							  {% capture grid_item_width %}
+							    {% cycle class_1, class_1, class_1, class_1, class_1, class_1, class_1, class_1, class_2, class_2, class_2 %}
+							  {% endcapture %}
+						{% endcase %}
+		        {% render 'product-grid-item', product: product, grid_item_width: grid_item_width, grid_layout: collection_layout %}
+		      {% endfor %}
+					{% render 'pagination', pagination: paginate, class: 'small-12 columns' %}
+		    </div>
+		  {% else %}
+				<div id="main-collection-products" data-id="{{ section.id }}">
+			    {% render 'no-products-found' %}
+				</div>
+		  {% endif %}
+		</div>
+	</div>
+{% endpaginate %}
+{% schema %}
+  {
+    "name": "Product grid",
+    "settings": [
+			{
+        "type": "range",
+        "id": "collection_product_count",
+        "min": 2,
+        "max": 24,
+        "step": 1,
+        "label": "Products per page",
+        "default": 12
+      },
+      {
+        "type": "select",
+        "id": "collection_layout",
+        "label": "Collection layout",
+        "default": "style1",
+        "options": [
+          { "value": "style1", "label": "Grid" },
+          { "value": "style2", "label": "Alternating - 3 / 4" },
+          { "value": "style3", "label": "Alternating - 4 / 5" },
+          { "value": "style4", "label": "Alternating - 5 / 6" },
+          { "value": "style5", "label": "Alternating - 4 / 3" },
+          { "value": "style6", "label": "Alternating - 5 / 4" },
+          { "value": "style7", "label": "Alternating - 6 / 5" },
+          { "value": "style8", "label": "Alternating - 4 / 4 / 3" }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Grid settings"
+      },
+			{
+        "type": "range",
+        "id": "collection_grid_num",
+        "min": 2,
+        "max": 6,
+        "step": 1,
+        "label": "Products per row",
+        "default": 4,
+        "info": "Works with the grid layout."
+      },
+	    {
+	      "type": "header",
+	      "content": "Filtering and sorting"
+	    },
+	    {
+	      "type": "checkbox",
+	      "id": "enable_filtering",
+	      "default": true,
+	      "label": "Enable filtering",
+	      "info": "Customize [filters](/admin/menus)"
+	    },
+	    {
+	      "type": "checkbox",
+	      "id": "enable_sorting",
+	      "default": true,
+	      "label": "Enable sorting"
+	    }
+    ]
+  }
+{% endschema %}

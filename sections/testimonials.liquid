@@ -1,0 +1,121 @@
+{{ 'testimonial.css' | asset_url | stylesheet_tag }}
+<div id="section-testimonials-{{ section.id }}" class="section-margin {% if section.settings.disable_top_spacing %}section-no-top-margin{% endif %} {% if section.settings.disable_bottom_spacing %}section-no-bottom-margin{% endif %}">
+	<div class="row">
+	  <div class="small-12 columns">
+	    <div class="thb-testimonials testimonial-{{ section.settings.style | escape }} slick" data-columns="1" data-pagination="true" data-fade="true" data-autoplay="{{ section.settings.autoplay }}" data-autoplay-speed="{{ section.settings.autoplay_length | times: 1000 }}">
+	      {% for block in section.blocks %}
+	      <div class="thb-testimonial" {{ block.shopify_attributes }}>
+	        <blockquote class="rte">{{ block.settings.text }}</blockquote>
+	        {%- if block.settings.image -%}
+						<img data-src="{{ block.settings.image.src | image_url }}" alt="{{ block.settings.image.alt | escape }}" class="author_image retina_size hide lazyload" width="{{ block.settings.image.width | escape }}" height="{{ block.settings.image.height | escape }}">
+					{%- else -%}
+					<div class="author_image thb-placeholder hide" style="width: 80px; height: 80px;">
+						{{ 'image' | placeholder_svg_tag }}
+					</div>
+					{%- endif -%}
+	        {% if block.settings.author %}
+	          <div>
+	            <cite>{{ block.settings.author }}</cite>
+	          </div>
+	        {% endif %}
+	      </div>
+	      {% endfor %}
+	    </div>
+	  </div>
+	</div>
+</div>
+{%- if request.design_mode -%}
+  <script src="{{ 'theme-editor.min.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+{% schema %}
+  {
+    "name": "Testimonials",
+    "settings": [
+      {
+        "type": "select",
+        "id": "style",
+        "label": "Style",
+        "default": "style1",
+        "options": [
+          { "value": "style1", "label": "Regular" },
+          { "value": "style2", "label": "Outline" },
+          { "value": "style3", "label": "Avatar Navigation" }
+        ]
+      },
+			{
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Auto-rotate slides",
+        "default": true
+      },
+			{
+				"type": "range",
+				"id": "autoplay_length",
+				"min": 3,
+				"max": 10,
+				"step": 1,
+				"unit": "s",
+				"label": "Change slides every",
+				"default": 5
+			},
+			{
+        "type": "header",
+        "content": "Spacing"
+      },
+			{
+				"type": "checkbox",
+				"id": "disable_top_spacing",
+				"default": false,
+				"label": "Remove top spacing"
+			},
+			{
+				"type": "checkbox",
+				"id": "disable_bottom_spacing",
+				"default": false,
+				"label": "Remove bottom spacing"
+			}
+    ],
+    "blocks": [
+      {
+        "type": "quote",
+        "name": "Testimonial",
+        "settings": [
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text",
+            "default": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>"
+          },
+          {
+            "id": "author",
+            "type": "text",
+            "label": "Author",
+						"default": "Review author"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Author image",
+            "info": "Used with avatar navigation"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Testimonials",
+				"blocks": [
+	        {
+	          "type": "quote"
+	        },
+	        {
+	          "type": "quote"
+	        },
+	        {
+	          "type": "quote"
+	        }
+	      ]
+      }
+    ]
+  }
+{% endschema %}

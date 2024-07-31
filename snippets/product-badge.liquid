@@ -1,0 +1,6 @@
+{% unless product.available %}
+<span class="badge out-of-stock {{ settings.badge_position }}">{{ 'products.product.out_of_stock' | t }}</span>
+{% endunless %}
+{% if product.compare_at_price > product.price and product.available %}
+<span class="badge onsale {{ settings.badge_position }}">{{ 'products.product.on_sale' | t }}</span>
+{% endif %}

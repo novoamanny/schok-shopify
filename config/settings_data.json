@@ -1,0 +1,302 @@
+{
+  "current": {
+    "heading_font": "din_next_n4",
+    "body_font": "din_next_n4",
+    "menu_font": "montserrat_n6",
+    "menu_uppercase": true,
+    "menu_font_size": 15,
+    "button_font": "montserrat_n6",
+    "quick_shop": false,
+    "quick_shop_collection": "all",
+    "products_style": "style1",
+    "products_hover_image": true,
+    "show_products_vendor": true,
+    "social_facebook_link": "https:\/\/www.facebook.com\/schokgear",
+    "social_twitter_link": "https:\/\/twitter.com\/schokgear",
+    "social_instagram_link": "https:\/\/www.instagram.com\/schokgear\/",
+    "cookie_notice": true,
+    "cookie_notice_text": "<p>Our site uses cookies. Learn more about our use of cookies: cookie policy<\/p>",
+    "favicon": "shopify:\/\/shop_images\/schok-symbol.png",
+    "checkout_header_image": "",
+    "checkout_logo_image": "",
+    "checkout_logo_position": "left",
+    "checkout_logo_size": "medium",
+    "checkout_body_background_image": "",
+    "checkout_body_background_color": "#ffffff",
+    "checkout_input_background_color_mode": "white",
+    "checkout_sidebar_background_image": "",
+    "checkout_sidebar_background_color": "#fafafa",
+    "checkout_heading_font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+    "checkout_body_font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+    "checkout_accent_color": "#197bbd",
+    "checkout_button_color": "#197bbd",
+    "checkout_error_color": "#e32c2b",
+    "mobile_secondary_menu": "secondary-menu",
+    "cart_notes_enable": true,
+    "sections": {
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "menu": "footer-north",
+          "copyright_text": "All Rights Reserved.",
+          "show_language_switcher": false,
+          "show_currency_switcher": false,
+          "show_payment_icons": false,
+          "show_social_icons": true
+        }
+      },
+      "header": {
+        "type": "header",
+        "settings": {
+          "logo": "shopify:\/\/shop_images\/Logo_3df1f5db-99fe-44c4-ad41-abe0d33550ee.png",
+          "logo_height_range": 40,
+          "header_style": "header-style2",
+          "full_width": true,
+          "menu": "2023-menu",
+          "transparent_header": false,
+          "logo_light": "shopify:\/\/shop_images\/schok-logo-reshaping.png",
+          "header_secondary_icons": false,
+          "header_search": false,
+          "show_language_switcher": false,
+          "show_currency_switcher": false,
+          "mobile_secondary_menu": ""
+        }
+      },
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "settings": {
+          "global_notification": false,
+          "global_notification_close": true,
+          "global_notification_homepage_only": false,
+          "global_notification_text": "Welcome to our store",
+          "global_notification_link": ""
+        }
+      }
+    },
+    "content_for_index": [
+
+    ]
+  },
+  "presets": {
+    "Default": {
+      "heading_font": "harmonia_sans_n4",
+      "body_font": "harmonia_sans_n4",
+      "menu_font": "harmonia_sans_n4",
+      "button_font": "harmonia_sans_n4",
+      "quick_shop": true,
+      "quick_shop_collection": "all",
+      "products_style": "style1",
+      "products_hover_image": true,
+      "show_products_vendor": true,
+      "cookie_notice": true,
+      "cookie_notice_text": "<p>Our site uses cookies. Learn more about our use of cookies: cookie policy<\/p>",
+      "favicon": "shopify:\/\/shop_images\/favicon.png",
+      "checkout_header_image": "",
+      "checkout_logo_image": "",
+      "checkout_logo_position": "left",
+      "checkout_logo_size": "medium",
+      "checkout_body_background_image": "",
+      "checkout_body_background_color": "#ffffff",
+      "checkout_input_background_color_mode": "white",
+      "checkout_sidebar_background_image": "",
+      "checkout_sidebar_background_color": "#fafafa",
+      "checkout_heading_font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+      "checkout_body_font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+      "checkout_accent_color": "#197bbd",
+      "checkout_button_color": "#197bbd",
+      "checkout_error_color": "#e32c2b",
+      "mobile_secondary_menu": "secondary-menu",
+      "cart_notes_enable": true,
+      "sections": {
+        "footer": {
+          "type": "footer",
+          "settings": {
+            "menu": "footer",
+            "copyright_text": "All Rights Reserved.",
+            "show_language_switcher": true,
+            "show_currency_switcher": true,
+            "show_payment_icons": true,
+            "show_social_icons": true
+          }
+        },
+        "header": {
+          "type": "header",
+          "settings": {
+            "logo_height_range": 22,
+            "header_style": "header-style1",
+            "full_width": false,
+            "menu": "main-menu",
+            "transparent_header": true,
+            "header_secondary_icons": false,
+            "header_search": true,
+            "show_language_switcher": true,
+            "show_currency_switcher": true,
+            "mobile_secondary_menu": "secondary-menu"
+          }
+        },
+        "announcement-bar": {
+          "type": "announcement-bar",
+          "settings": {
+            "global_notification": true,
+            "global_notification_close": true,
+            "global_notification_homepage_only": false
+          }
+        }
+      },
+      "content_for_index": [
+
+      ]
+    },
+    "Greige": {
+      "heading_font": "joanna_sans_nova_n4",
+      "body_font": "karla_n4",
+      "menu_font": "karla_n4",
+      "menu_uppercase": true,
+      "menu_font_size": 14,
+      "button_font": "karla_n4",
+      "heading_text_color": "#182b43",
+      "global_notification_bg_color": "#182b43",
+      "footer_border_color": "#264368",
+      "footer_bg_color": "#182b43",
+      "quick_shop": true,
+      "quick_shop_collection": "all",
+      "products_style": "style1",
+      "products_hover_image": true,
+      "cookie_notice": true,
+      "cookie_notice_text": "<p>Our site uses cookies. Learn more about our use of cookies: cookie policy<\/p>",
+      "checkout_header_image": "",
+      "checkout_logo_image": "",
+      "checkout_logo_position": "left",
+      "checkout_logo_size": "medium",
+      "checkout_body_background_image": "",
+      "checkout_body_background_color": "#ffffff",
+      "checkout_input_background_color_mode": "white",
+      "checkout_sidebar_background_image": "",
+      "checkout_sidebar_background_color": "#fafafa",
+      "checkout_heading_font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+      "checkout_body_font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+      "checkout_accent_color": "#197bbd",
+      "checkout_button_color": "#197bbd",
+      "checkout_error_color": "#e32c2b",
+      "header_font": "joanna_sans_nova_n4",
+      "cart_notes_enable": true,
+      "sections": {
+        "footer": {
+          "type": "footer",
+          "settings": {
+            "menu": "footer",
+            "copyright_text": "All Rights Reserved.",
+            "show_language_switcher": true,
+            "show_currency_switcher": true,
+            "show_payment_icons": true,
+            "show_social_icons": true
+          }
+        },
+        "header": {
+          "type": "header",
+          "settings": {
+            "logo_height_range": 48,
+            "header_style": "header-style1",
+            "full_width": true,
+            "menu": "main-menu",
+            "transparent_header": true,
+            "header_secondary_icons": true,
+            "header_search": true,
+            "show_language_switcher": true,
+            "show_currency_switcher": true,
+            "mobile_secondary_menu": "secondary-menu"
+          }
+        },
+        "announcement-bar": {
+          "type": "announcement-bar",
+          "settings": {
+            "global_notification": true,
+            "global_notification_close": true,
+            "global_notification_homepage_only": false
+          }
+        }
+      },
+      "content_for_index": [
+
+      ]
+    },
+    "Primrose": {
+      "heading_font": "linotype_gianotten_n4",
+      "body_font": "joanna_sans_nova_n4",
+      "menu_font": "joanna_sans_nova_n4",
+      "menu_uppercase": true,
+      "menu_font_size": 14,
+      "button_font": "joanna_sans_nova_n4",
+      "global_notification_text_color": "#151515",
+      "global_notification_bg_color": "#f9f3f2",
+      "footer_text_color": "#151515",
+      "footer_link_color": "#151515",
+      "footer_link_hover_color": "#151515",
+      "footer_border_color": "#e4e4e4",
+      "footer_bg_color": "#f9f3f2",
+      "quick_shop": true,
+      "quick_shop_collection": "frontpage",
+      "products_style": "style1",
+      "products_hover_image": true,
+      "show_products_vendor": true,
+      "color_swatches": "White : #FAFAFA",
+      "cookie_notice": true,
+      "cookie_notice_text": "<p>Our site uses cookies. Learn more about our use of cookies: cookie policy<\/p>",
+      "favicon": "shopify:\/\/shop_images\/favicon.png",
+      "checkout_header_image": "",
+      "checkout_logo_image": "",
+      "checkout_logo_position": "left",
+      "checkout_logo_size": "medium",
+      "checkout_body_background_image": "",
+      "checkout_body_background_color": "#ffffff",
+      "checkout_input_background_color_mode": "white",
+      "checkout_sidebar_background_image": "",
+      "checkout_sidebar_background_color": "#fafafa",
+      "checkout_heading_font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+      "checkout_body_font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+      "checkout_accent_color": "#197bbd",
+      "checkout_button_color": "#197bbd",
+      "checkout_error_color": "#e32c2b",
+      "mobile_secondary_menu": "secondary-menu",
+      "cart_notes_enable": true,
+      "sections": {
+        "footer": {
+          "type": "footer",
+          "settings": {
+            "menu": "footer",
+            "show_language_switcher": true,
+            "show_currency_switcher": true,
+            "show_payment_icons": true,
+            "show_social_icons": true
+          }
+        },
+        "header": {
+          "type": "header",
+          "settings": {
+            "logo_height_range": 40,
+            "header_style": "header-style2",
+            "full_width": false,
+            "menu": "main-menu",
+            "transparent_header": false,
+            "header_secondary_icons": true,
+            "header_search": true,
+            "show_language_switcher": true,
+            "show_currency_switcher": true,
+            "mobile_secondary_menu": "secondary-menu"
+          }
+        },
+        "announcement-bar": {
+          "type": "announcement-bar",
+          "settings": {
+            "global_notification": true,
+            "global_notification_close": false,
+            "global_notification_homepage_only": false
+          }
+        }
+      },
+      "content_for_index": [
+
+      ]
+    }
+  }
+}

@@ -1,0 +1,35 @@
+<header class="header style4{% if template == 'index' and transparent_header %} light-title fixed{% endif %}">
+  <div class="row align-middle {% if full_width %}full-width-row{% endif %}">
+		<div class="small-12 columns">
+			<div class="header-grid">
+		    <div class="toggle-holder">
+					<a href="#mobile-menu" class="mobile-toggle" title="{{ 'general.misc.toggle_mobile_menu' | t | escape }}">
+						<span></span>
+						<span></span>
+						<span></span>
+					</a>
+				</div>
+				<div class="logo-holder">
+					{% if section.settings.logo %}
+						<a class="logolink" href="{{ routes.root_url }}">
+							<img src="{{ section.settings.logo | image_url }}" alt="{{ section.settings.logo.alt | default: shop.name | escape }}" class="logoimg bg--light" width="{{ section.settings.logo.width }}" height="{{ section.settings.logo.height }}" loading="lazy">
+							{%- liquid
+								if section.settings.logo_light != blank
+									assign light_logo = section.settings.logo_light
+								else
+									assign light_logo = section.settings.logo
+								endif
+							-%}
+							<img src="{{ light_logo | image_url }}" alt="{{ shop.name }}" class="logoimg bg--dark" width="{{ section.settings.logo.width }}" height="{{ section.settings.logo.height }}" loading="lazy">
+						</a>
+					{% else %}
+						<a class="logolink text" href="{{ routes.root_url }}">
+							{{ shop.name }}
+						</a>
+					{% endif %}
+				</div>
+		    {% render 'header-secondary' %}
+			</div>
+		</div>
+  </div>
+</header>
